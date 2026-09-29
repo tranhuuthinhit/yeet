@@ -172,7 +172,7 @@ Download the latest build from [GitHub Releases](https://github.com/tranhuuthinh
 
 **Branches:** `main` holds released code, `develop` is where work lands, and `releases/vX.Y.Z` branches prepare each release.
 
-**Cutting a release:** pushing a `v*` tag runs [.github/workflows/release.yml](.github/workflows/release.yml), which builds `Yeet.app` with Xcode, packages `Yeet-X.Y.Z.dmg` and `.zip` with SHA-256 checksums, and publishes a GitHub Release. The version comes from the tag; the build number is the workflow run number.
+**Cutting a release:** pushing a `v*` tag runs [.github/workflows/release.yml](.github/workflows/release.yml), which builds `Yeet.app` with Xcode, packages `Yeet-X.Y.Z.dmg` and `.zip` with SHA-256 checksums, uploads them to B2 under `yeet/releases/X.Y.Z/` (a version that already exists there is refused — versions are never overwritten), publishes a GitHub Release, and deploys the website with the new version, download link and `.dmg` SHA-256 baked in ([scripts/render-website.py](scripts/render-website.py)). The version comes from the tag; the build number is the workflow run number. Required secrets and variables are listed at the top of the workflow.
 
 ```bash
 git checkout releases/v1.0.0
