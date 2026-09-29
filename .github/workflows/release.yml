@@ -1,0 +1,79 @@
+# Push a tag like v1.0.0 → build a universal Yeet.app and publish it as a GitHub Release.
+#   git tag v1.0.0 && git push origin v1.0.0
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to build (e.g. 1.0.0). Manual runs upload an artifact, no release."
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve version
+        run: |
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+          else
+            VERSION="${{ github.event.inputs.version }}"
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "BUILD_NUMBER=${{ github.run_number }}" >> "$GITHUB_ENV"
+
+      - name: Build Yeet.app (universal, ad-hoc signed)
+        run: |
+          xcodebuild -version
+          xcodebuild build \
+            -project Yeet.xcodeproj -scheme Yeet -configuration Release \
+            -destination 'generic/platform=macOS' \
+            -derivedDataPath build/DD \
+            CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= \
+            MARKETING_VERSION="$VERSION" CURRENT_PROJECT_VERSION="$BUILD_NUMBER"
+          APP=build/DD/Build/Products/Release/Yeet.app
+          lipo -archs "$APP/Contents/MacOS/Yeet"
+          codesign --verify --deep --strict "$APP"
+          mkdir -p dist && cp -R "$APP" dist/
+
+      - name: Package .zip and .dmg
+        run: |
+          cd dist
+          ditto -c -k --sequesterRsrc --keepParent Yeet.app "Yeet-$VERSION.zip"
+          mkdir dmg && cp -R Yeet.app dmg/ && ln -s /Applications dmg/Applications
+          hdiutil create -volname "Yeet $VERSION" -srcfolder dmg -ov -format UDZO "Yeet-$VERSION.dmg"
+          shasum -a 256 "Yeet-$VERSION.zip" "Yeet-$VERSION.dmg" | tee SHA256SUMS.txt
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Yeet-${{ env.VERSION }}
+          path: |
+            dist/Yeet-*.zip
+            dist/Yeet-*.dmg
+            dist/SHA256SUMS.txt
+
+      - name: Publish GitHub Release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat > notes.md <<NOTES
+          ## Yeet $VERSION
+
+          Universal build (Apple Silicon + Intel), macOS 14+.
+
+          **First launch:** this build is ad-hoc signed, not notarized. Right-click Yeet.app → **Open**,
+          or run \`xattr -dr com.apple.quarantine /Applications/Yeet.app\`.
+          NOTES
+          gh release create "$GITHUB_REF_NAME" \
+            dist/Yeet-$VERSION.dmg dist/Yeet-$VERSION.zip dist/SHA256SUMS.txt \
+            --title "Yeet $VERSION" --notes-file notes.md --generate-notes

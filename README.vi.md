@@ -227,6 +227,22 @@ scripts/
   appstore.env.example   Cấu hình team / API key
 ```
 
+## Phát hành
+
+Tải bản mới nhất ở [GitHub Releases](https://github.com/tranhuuthinhit/yeet/releases). Bản build là universal (Apple Silicon + Intel), ký ad-hoc, chưa notarize: lần đầu mở, chuột phải vào Yeet.app → **Open**, hoặc chạy `xattr -dr com.apple.quarantine /Applications/Yeet.app`.
+
+**Nhánh:** `main` chứa code đã phát hành, `develop` là nơi gộp code đang phát triển, `releases/vX.Y.Z` để chuẩn bị từng bản phát hành.
+
+**Ra bản mới:** đẩy một tag `v*` sẽ chạy [.github/workflows/release.yml](.github/workflows/release.yml): build `Yeet.app` bằng Xcode, đóng gói `Yeet-X.Y.Z.dmg` và `.zip` kèm checksum SHA-256, rồi tạo GitHub Release. Số phiên bản lấy từ tag, số build là số thứ tự lần chạy workflow.
+
+```bash
+git checkout releases/v1.0.0
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+Cũng có thể chạy workflow thủ công (Actions → Release → Run workflow) để lấy bản build dạng artifact mà không tạo Release.
+
 ## Ghi chú
 
 - **Không thấy icon trên Dock khi Run bằng Xcode?** Hãy mở `Yeet.xcodeproj`, không phải `Package.swift` (bản SwiftPM không có bundle và asset). Nếu vẫn còn icon mặc định, chạy **Product → Clean Build Folder** (⇧⌘K) rồi `killall Dock` để macOS nạp lại cache icon.

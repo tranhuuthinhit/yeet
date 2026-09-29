@@ -166,6 +166,22 @@ scripts/
   appstore.env.example   Team / API key config
 ```
 
+## Releases
+
+Download the latest build from [GitHub Releases](https://github.com/tranhuuthinhit/yeet/releases). Builds are universal (Apple Silicon + Intel) and ad-hoc signed, not notarized: on first launch right-click Yeet.app → **Open**, or run `xattr -dr com.apple.quarantine /Applications/Yeet.app`.
+
+**Branches:** `main` holds released code, `develop` is where work lands, and `releases/vX.Y.Z` branches prepare each release.
+
+**Cutting a release:** pushing a `v*` tag runs [.github/workflows/release.yml](.github/workflows/release.yml), which builds `Yeet.app` with Xcode, packages `Yeet-X.Y.Z.dmg` and `.zip` with SHA-256 checksums, and publishes a GitHub Release. The version comes from the tag; the build number is the workflow run number.
+
+```bash
+git checkout releases/v1.0.0
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+You can also run the workflow by hand (Actions → Release → Run workflow) to get the build as an artifact without publishing a release.
+
 ## Contributing
 
 Issues and pull requests are welcome.
