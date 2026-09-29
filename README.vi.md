@@ -233,3 +233,7 @@ scripts/
 
 - Giao diện dùng chế độ sáng theo thiết kế (dark mode chưa làm).
 - Bản trực tiếp (Debug/Release, `build-app.sh`) không dùng App Sandbox. Bản Mac App Store là cấu hình `AppStore`.
+
+## Giấy phép
+
+[MIT](LICENSE) © 2026 Steve Tran

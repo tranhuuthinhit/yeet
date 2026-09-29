@@ -186,3 +186,7 @@ Issues and pull requests are welcome.
 - **No icon in the Dock when running from Xcode?** Open `Yeet.xcodeproj`, not `Package.swift` (the SwiftPM build has no bundle or assets). If you still see the default icon, run **Product → Clean Build Folder** (⇧⌘K), then `killall Dock`.
 - The UI uses light mode by design (dark mode isn't done yet).
 - The direct build (Debug/Release, `build-app.sh`) doesn't use the App Sandbox. The Mac App Store build is the `AppStore` configuration.
+
+## License
+
+[MIT](LICENSE) © 2026 Steve Tran
