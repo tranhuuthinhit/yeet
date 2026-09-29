@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Privacy Policy — Yeet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Yeet privacy policy. Yeet does not collect, store on servers, or share any personal data.">
+<link rel="icon" href="images/app-icon.png">
+<style>
+body{margin:0;background:#F5F7FA;color:#1A2332;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#2E5C8A;text-decoration:none}
+a:hover{color:#1E4470;text-decoration:underline}
+img{display:block}
+</style>
+</helmet>
+
+<header style="position:sticky;top:0;z-index:10;background:rgba(245,247,250,0.96);border-bottom:1px solid #DDE3EB">
+  <div style="max-width:1160px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:20px">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;color:#1A2332;text-decoration:none">
+      <img src="images/app-icon.png" alt="" style="width:32px;height:32px;border-radius:8px">
+      <span style="font-size:18px;font-weight:700;letter-spacing:-0.2px">Yeet</span>
+    </a>
+    <div style="margin-left:auto;display:flex;border:1px solid #C5CDD9;border-radius:8px;overflow:hidden;font-size:13px;font-weight:600">
+      <button onClick="{{ setEn }}" style="border:0;padding:7px 10px;background:{{ enBg }};color:{{ enFg }};cursor:pointer;font:inherit">EN</button>
+      <button onClick="{{ setVi }}" style="border:0;padding:7px 10px;background:{{ viBg }};color:{{ viFg }};cursor:pointer;font:inherit">VI</button>
+    </div>
+  </div>
+</header>
+
+<sc-if value="{{ isEn }}" hint-placeholder-val="{{ true }}">
+<main lang="en" style="max-width:760px;margin:0 auto;padding:64px 24px 88px;display:flex;flex-direction:column;gap:36px">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <span style="font-size:13px;font-weight:600;letter-spacing:1px;color:#2E5C8A">PRIVACY POLICY</span>
+    <h1 style="margin:0;font-size:clamp(32px,4.6vw,48px);line-height:1.1;letter-spacing:-0.8px;font-weight:700">Yeet doesn’t collect your data.</h1>
+    <p style="margin:0;font-size:15px;color:#6B7785">Effective date: {{ dateEn }} · Applies to Yeet {{ version }} and later for macOS</p>
+  </div>
+
+  <div style="background:rgba(43,167,118,0.12);border-radius:12px;padding:20px 24px;display:flex;flex-direction:column;gap:6px">
+    <strong style="font-size:17px;color:#1F7F59">Summary</strong>
+    <p style="margin:0;font-size:16px;line-height:1.6;color:#1A2332;text-wrap:pretty">Yeet runs entirely on your Mac. It has no account, no analytics, no advertising and no tracking. Nothing about you, your files or your disk is sent to us or to anyone else.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">1. Data we collect</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">None. Yeet does not collect, transmit or sell personal data, usage data, diagnostics, identifiers or location. We do not use third-party SDKs for analytics, crash reporting or advertising.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">2. What Yeet reads on your Mac</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">To show how much space caches use, Yeet reads file-system metadata — folder paths, sizes, file counts and modification dates — in known cache locations (for example ~/Library/Caches, ~/Library/Developer, ~/.npm, ~/.gradle) and in project folders you add yourself. Yeet does not open or read the contents of your files.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">3. Data stored on your Mac</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">Yeet keeps two things locally, in its own app container:</p>
+    <ul style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px;font-size:16px;line-height:1.6;color:#374151">
+      <li>Your settings (enabled tools, project folders, display options).</li>
+      <li>Daily disk-size snapshots for the “Growth” view, kept for up to 60 days and then deleted automatically.</li>
+    </ul>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">This data never leaves your Mac. Deleting Yeet removes it.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">4. Permissions</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">Yeet may ask for access to folders or for Full Disk Access so it can measure protected locations such as ~/Library. These permissions are used only to measure and, when you confirm, delete the cache items you selected. You can revoke them anytime in System Settings → Privacy &amp; Security.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">5. Deleting files</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">Yeet only deletes items you select and confirm. Deleted items are removed permanently and are not sent anywhere.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">6. Network access</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">Scanning, comparing and cleaning work fully offline. Downloads and updates from the Mac App Store are handled by Apple under <a href="https://www.apple.com/legal/privacy/">Apple’s Privacy Policy</a>.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">7. Children</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">Yeet does not collect data from anyone, including children under 13.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">8. Changes to this policy</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">If this policy changes, we will update this page and the effective date above. If a future version ever needs to collect data, we will say so here and in the App Store listing before release.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">9. Contact</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151">Questions about privacy: <a href="mailto:{{ email }}">{{ email }}</a></p>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isVi }}" hint-placeholder-val="{{ false }}">
+<main lang="vi" style="max-width:760px;margin:0 auto;padding:64px 24px 88px;display:flex;flex-direction:column;gap:36px">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <span style="font-size:13px;font-weight:600;letter-spacing:1px;color:#2E5C8A">CHÍNH SÁCH QUYỀN RIÊNG TƯ</span>
+    <h1 style="margin:0;font-size:clamp(32px,4.6vw,48px);line-height:1.1;letter-spacing:-0.8px;font-weight:700">Yeet không thu thập dữ liệu của bạn.</h1>
+    <p style="margin:0;font-size:15px;color:#6B7785">Hiệu lực từ: {{ dateVi }} · Áp dụng cho Yeet {{ version }} trở lên trên macOS</p>
+  </div>
+
+  <div style="background:rgba(43,167,118,0.12);border-radius:12px;padding:20px 24px;display:flex;flex-direction:column;gap:6px">
+    <strong style="font-size:17px;color:#1F7F59">Tóm tắt</strong>
+    <p style="margin:0;font-size:16px;line-height:1.6;color:#1A2332;text-wrap:pretty">Yeet chạy hoàn toàn trên máy Mac của bạn. Không tài khoản, không phân tích sử dụng, không quảng cáo, không theo dõi. Không có thông tin nào về bạn, tệp hay ổ đĩa của bạn được gửi cho chúng tôi hay bất kỳ ai.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">1. Dữ liệu chúng tôi thu thập</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">Không có. Yeet không thu thập, truyền đi hay bán dữ liệu cá nhân, dữ liệu sử dụng, chẩn đoán, mã định danh hay vị trí. Chúng tôi không dùng SDK bên thứ ba cho phân tích, báo lỗi hay quảng cáo.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">2. Yeet đọc gì trên máy bạn</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">Để hiện dung lượng cache, Yeet đọc thông tin hệ thống tệp — đường dẫn, kích thước, số tệp và ngày sửa của thư mục — tại các vị trí cache đã biết (ví dụ ~/Library/Caches, ~/Library/Developer, ~/.npm, ~/.gradle) và trong thư mục dự án bạn tự thêm. Yeet không mở và không đọc nội dung tệp của bạn.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">3. Dữ liệu lưu trên máy bạn</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">Yeet lưu hai thứ, trong thư mục riêng của app:</p>
+    <ul style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px;font-size:16px;line-height:1.6;color:#374151">
+      <li>Cài đặt của bạn (công cụ được bật, thư mục dự án, tuỳ chọn hiển thị).</li>
+      <li>Số liệu dung lượng chụp mỗi ngày cho màn hình “Tăng trưởng”, giữ tối đa 60 ngày rồi tự xoá.</li>
+    </ul>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">Dữ liệu này không bao giờ rời khỏi máy. Xoá Yeet là xoá luôn dữ liệu này.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">4. Quyền truy cập</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">Yeet có thể xin quyền truy cập thư mục hoặc Full Disk Access để đo các vị trí được bảo vệ như ~/Library. Quyền này chỉ dùng để đo và — khi bạn xác nhận — xoá các mục cache bạn đã chọn. Bạn có thể thu hồi bất cứ lúc nào trong Cài đặt hệ thống → Quyền riêng tư &amp; Bảo mật.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">5. Việc xoá tệp</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">Yeet chỉ xoá những mục bạn chọn và xác nhận. Mục đã xoá bị xoá vĩnh viễn và không được gửi đi đâu.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">6. Kết nối mạng</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">Quét, so sánh và dọn dẹp đều chạy ngoại tuyến. Việc tải và cập nhật qua Mac App Store do Apple xử lý theo <a href="https://www.apple.com/legal/privacy/">Chính sách quyền riêng tư của Apple</a>.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">7. Trẻ em</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">Yeet không thu thập dữ liệu của bất kỳ ai, kể cả trẻ em dưới 13 tuổi.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">8. Thay đổi chính sách</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151;text-wrap:pretty">Nếu chính sách thay đổi, chúng tôi sẽ cập nhật trang này và ngày hiệu lực ở trên. Nếu phiên bản sau cần thu thập dữ liệu, chúng tôi sẽ ghi rõ tại đây và trên App Store trước khi phát hành.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h2 style="margin:0;font-size:22px;font-weight:600">9. Liên hệ</h2>
+    <p style="margin:0;font-size:16px;line-height:1.65;color:#374151">Câu hỏi về quyền riêng tư: <a href="mailto:{{ email }}">{{ email }}</a></p>
+  </div>
+</main>
+</sc-if>
+
+<footer style="background:#F5F7FA;border-top:1px solid #DDE3EB">
+  <div style="max-width:1160px;margin:0 auto;padding:24px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px;color:#6B7785">
+    <span>© 2026 Yeet</span>
+    <a href="index.html" style="margin-left:auto;color:#6B7785">← yeet</a>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;email&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;support@example.com&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;version&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;1.0.0&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;dateEn&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;September 29, 2026&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;dateVi&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;29/09/2026&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { lang: (() => {
+    try {
+      const q = new URLSearchParams(location.search).get("lang");
+      if (q === "vi" || q === "en") return q;
+      return localStorage.getItem("yeet-site-lang") || "en";
+    } catch (e) { return "en"; }
+  })() };
+  componentDidMount() { this.apply(); }
+  componentDidUpdate() { this.apply(); }
+  apply() {
+    const vi = this.state.lang === "vi";
+    document.documentElement.lang = vi ? "vi" : "en";
+    document.title = vi ? "Chính sách quyền riêng tư — Yeet" : "Privacy Policy — Yeet";
+  }
+  setLang(l) { try { localStorage.setItem("yeet-site-lang", l); } catch (e) {} this.setState({ lang: l }); }
+  renderVals() {
+    const vi = this.state.lang === "vi";
+    return {
+      isEn: !vi, isVi: vi,
+      setEn: () => this.setLang("en"), setVi: () => this.setLang("vi"),
+      enBg: vi ? "#FFFFFF" : "#2E5C8A", enFg: vi ? "#4A5568" : "#FFFFFF",
+      viBg: vi ? "#2E5C8A" : "#FFFFFF", viFg: vi ? "#FFFFFF" : "#4A5568",
+      version: this.props.version ?? "1.0.0",
+      email: this.props.email ?? "support@example.com",
+      dateEn: this.props.dateEn ?? "September 29, 2026",
+      dateVi: this.props.dateVi ?? "29/09/2026"
+    };
+  }
+}
+</script>
+</body>
+</html>
