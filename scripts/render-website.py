@@ -3,8 +3,8 @@
 
   scripts/render-website.py <version> <sha256-of-dmg> <out-dir>
 
-Copies index.html, support.js and images/ into <out-dir> (README.txt and the editor source
-"Yeet Website.dc.html" are not published). The download link is /download/<version>/Yeet-<version>.dmg,
+Copies everything in website/ into <out-dir> except README.txt and the editor sources (*.dc.html),
+so new pages (e.g. privacy.html) ship without touching this script. The download link is /download/<version>/Yeet-<version>.dmg,
 served on the VPS by yeet-dl (302 → short-lived presigned URL on B2).
 
 index.html keeps these values in two places — the `data-props` defaults and the `p.x ?? "…"` fallbacks
@@ -58,10 +58,9 @@ def main() -> None:
 
     if out.exists():
         shutil.rmtree(out)
-    out.mkdir(parents=True)
+    skip = shutil.ignore_patterns("README.txt", "*.dc.html", ".DS_Store")
+    shutil.copytree(src, out, ignore=skip, symlinks=False)
     (out / "index.html").write_text(page, encoding="utf-8")
-    shutil.copy2(src / "support.js", out / "support.js")
-    shutil.copytree(src / "images", out / "images")
     print(f"rendered {out} — Yeet {version}, {values['downloadUrl']}, sha256 {sha256[:12]}…")
 
 
