@@ -6,6 +6,11 @@
 # already on B2 fails in `check`. If `website` fails, use "Re-run failed jobs" — it reads the checksum
 # back from B2, so it does not need a rebuild.
 #
+# Website only: push a tag like web/1.0.0/1 → render + deploy the website at that commit for version
+# 1.0.0, which must already be on B2. No build, no B2 upload, no GitHub Release. Bump the last part
+# for every redeploy (web/1.0.0/2, …).
+#   git tag web/1.0.0/1 && git push origin web/1.0.0/1
+#
 # Repository secrets: B2_KEY_ID, B2_APP_KEY (key limited to prefix yeet/: listFiles, readFiles, writeFiles),
 #   DEPLOY_HOST, DEPLOY_USER, DEPLOY_KNOWN_HOSTS, DEPLOY_SSH_KEY (forced-command key → ci-deploy.sh).
 # Repository variables: B2_ENDPOINT (https://s3.<region>.backblazeb2.com), B2_BUCKET.
@@ -13,7 +18,7 @@ name: Release
 
 on:
   push:
-    tags: ["v*"]
+    tags: ["v*", "web/*/*"]
   workflow_dispatch:
     inputs:
       version:
@@ -39,22 +44,47 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.v.outputs.version }}
+      web_only: ${{ steps.v.outputs.web_only }}
     steps:
       - name: Resolve version
         id: v
         env:
           INPUT_VERSION: ${{ github.event.inputs.version }}
         run: |
-          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+          WEB_ONLY=false
+          if [[ "$GITHUB_REF_TYPE" == "tag" && "$GITHUB_REF_NAME" == web/* ]]; then
+            WEB_ONLY=true
+            VERSION="${GITHUB_REF_NAME#web/}"
+            VERSION="${VERSION%%/*}"
+          elif [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
             VERSION="${GITHUB_REF_NAME#v}"
           else
             VERSION="$INPUT_VERSION"
           fi
           [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$ ]] || { echo "::error::Invalid version '$VERSION'"; exit 1; }
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "web_only=$WEB_ONLY" >> "$GITHUB_OUTPUT"
+
+      - name: Require a version that is complete on B2 (website only)
+        if: steps.v.outputs.web_only == 'true'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.B2_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.B2_APP_KEY }}
+          B2_ENDPOINT: ${{ vars.B2_ENDPOINT }}
+          B2_BUCKET: ${{ vars.B2_BUCKET }}
+          VERSION: ${{ steps.v.outputs.version }}
+        run: |
+          for v in AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY B2_ENDPOINT B2_BUCKET; do
+            [[ -n "${!v}" ]] || { echo "::error::$v is empty — check repository secrets B2_KEY_ID/B2_APP_KEY and variables B2_ENDPOINT/B2_BUCKET"; exit 1; }
+          done
+          # SHA256SUMS.txt is uploaded last, so its presence means the version is complete
+          aws s3api head-object --endpoint-url "$B2_ENDPOINT" --bucket "$B2_BUCKET" \
+            --key "$B2_PREFIX/$VERSION/SHA256SUMS.txt" > /dev/null \
+            || { echo "::error::$B2_PREFIX/$VERSION/SHA256SUMS.txt not found on B2 — release v$VERSION first."; exit 1; }
+          echo "$B2_PREFIX/$VERSION/ is on B2"
 
       - name: Refuse a version that is already on B2
-        if: github.ref_type == 'tag'
+        if: github.ref_type == 'tag' && steps.v.outputs.web_only != 'true'
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.B2_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.B2_APP_KEY }}
@@ -75,6 +105,7 @@ jobs:
 
   build:
     needs: check
+    if: needs.check.outputs.web_only != 'true'
     runs-on: macos-15
     env:
       VERSION: ${{ needs.check.outputs.version }}
@@ -115,7 +146,7 @@ jobs:
 
   publish:
     needs: [check, build]
-    if: github.ref_type == 'tag'
+    if: github.ref_type == 'tag' && needs.check.outputs.web_only != 'true'
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ needs.check.outputs.version }}
@@ -162,7 +193,10 @@ jobs:
 
   website:
     needs: [check, publish]
-    if: github.ref_type == 'tag'
+    # always(): run even though publish is skipped on a website-only tag, but never after a failure
+    if: >-
+      always() && github.ref_type == 'tag' && needs.check.result == 'success'
+      && (needs.publish.result == 'success' || needs.check.outputs.web_only == 'true')
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ needs.check.outputs.version }}
