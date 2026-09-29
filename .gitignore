@@ -9,3 +9,5 @@ scripts/appstore.env
 xcuserdata/
 Claude outputs/
 *.zip
+website/downloads/
+*.dmg
