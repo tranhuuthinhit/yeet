@@ -1,0 +1,441 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		008824C0F5959BF21977E444 /* PermissionPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179A87C609D70895EDD74EDB /* PermissionPanel.swift */; };
+		01B6FAABCBCB0FBAFCB8A7F6 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74DE6B3CBCB0B9F39B2208C /* Components.swift */; };
+		070DB0AA081B60361193866B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86533D951B7D4E58EC20B990 /* OnboardingView.swift */; };
+		09132E7FD652CB4A5725A3B2 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB75619A974FC8FE3532437 /* SidebarView.swift */; };
+		224BDA866D3C57EACE0E78D7 /* InspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9893C81E478233BD353B4FEA /* InspectorView.swift */; };
+		2703AE9E2925DEFF2FC67248 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B411988006D3C92FF0B14D87 /* ContentView.swift */; };
+		2A96DB9DA9A3BDFE30C19994 /* ConfirmOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E097BE5B346BDA5276D5C159 /* ConfirmOverlay.swift */; };
+		2EFF1E061077E64B65AA9C66 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AA83F433C4E9465A1CDF0D /* SettingsView.swift */; };
+		2F4CC8213FED580CAB4322CB /* YeetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59141BA0523DD70049C251B3 /* YeetApp.swift */; };
+		316AEDB7F424AE5AF45D7DB9 /* Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4807840217716A6BDDE73CC /* Scanner.swift */; };
+		5675579B8F61983BDBCC06F3 /* Growth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BDAECA5B02C30157384C71 /* Growth.swift */; };
+		643812D3024AC044FBE54242 /* ScannerExtra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB6952CE3A9F2C1BF29A5BC /* ScannerExtra.swift */; };
+		801ED7C8B5C839944E00BCA0 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 52128C03A48534FD7BED240F /* PrivacyInfo.xcprivacy */; };
+		8481C219EC412ADA2E768B96 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07635EAA21F840E6FBE39914 /* AppModel.swift */; };
+		8AC5CC2AED7BC0F2BFE09192 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93F1A53CBB5EC659EA91B091 /* Assets.xcassets */; };
+		A34414FAB2B797F02468B893 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F46B3E2DC5446470AAE557 /* Theme.swift */; };
+		C8C8A476357B57EF92E0C770 /* ProtectedFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203F1C4C21B2FE8CDE8C3052 /* ProtectedFolders.swift */; };
+		D06E56FF1DF32D1B56754D61 /* FooterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F967C597CC131E95BCC35 /* FooterBar.swift */; };
+		D3F8A86EBE73CE8C4D985CD7 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50D1EE96CA2878367322F8C /* HeaderView.swift */; };
+		D44654178604251DDD6B803F /* Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AE5003E4FABE58BE3B3615 /* Format.swift */; };
+		A1B2C3D4E5F60718293A4B5C /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A60718293A4B5D /* L10n.swift */; };
+		D46B045305676954D89EA2A1 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195694D304D2E0C65C02E10B /* Models.swift */; };
+		DBE314262925884A332C2D01 /* GrowthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89628E6AE375983FAA6CADC /* GrowthView.swift */; };
+		E179E24DF905399E2C960B90 /* CacheTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA8E8943A436F510DEEE5E9 /* CacheTreeView.swift */; };
+		E618839A748B49A2AEECB7E2 /* Cleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080AA8C36F4E013921EFE183 /* Cleaner.swift */; };
+		F8F49B1E942CCDBE0696411C /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF1F57F1FE687B1292C955 /* MenuBarView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		07635EAA21F840E6FBE39914 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		080AA8C36F4E013921EFE183 /* Cleaner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cleaner.swift; sourceTree = "<group>"; };
+		179A87C609D70895EDD74EDB /* PermissionPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionPanel.swift; sourceTree = "<group>"; };
+		195694D304D2E0C65C02E10B /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		203F1C4C21B2FE8CDE8C3052 /* ProtectedFolders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectedFolders.swift; sourceTree = "<group>"; };
+		3121C514600345061A678A63 /* Yeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BB75619A974FC8FE3532437 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		45AE5003E4FABE58BE3B3615 /* Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Format.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A60718293A4B5D /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
+		4DE83D8B23DFD91E8F5A494F /* YeetAppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YeetAppStore.entitlements; sourceTree = "<group>"; };
+		51AA83F433C4E9465A1CDF0D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		52128C03A48534FD7BED240F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		59141BA0523DD70049C251B3 /* YeetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YeetApp.swift; sourceTree = "<group>"; };
+		5FB6952CE3A9F2C1BF29A5BC /* ScannerExtra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerExtra.swift; sourceTree = "<group>"; };
+		66F46B3E2DC5446470AAE557 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		7AA8E8943A436F510DEEE5E9 /* CacheTreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheTreeView.swift; sourceTree = "<group>"; };
+		86533D951B7D4E58EC20B990 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		93F1A53CBB5EC659EA91B091 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9893C81E478233BD353B4FEA /* InspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorView.swift; sourceTree = "<group>"; };
+		B411988006D3C92FF0B14D87 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B48D1827D04F9FB42A121898 /* Yeet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Yeet.entitlements; sourceTree = "<group>"; };
+		C50D1EE96CA2878367322F8C /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		C59F967C597CC131E95BCC35 /* FooterBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterBar.swift; sourceTree = "<group>"; };
+		C8DF1F57F1FE687B1292C955 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		D4807840217716A6BDDE73CC /* Scanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scanner.swift; sourceTree = "<group>"; };
+		D7BDAECA5B02C30157384C71 /* Growth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Growth.swift; sourceTree = "<group>"; };
+		E097BE5B346BDA5276D5C159 /* ConfirmOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmOverlay.swift; sourceTree = "<group>"; };
+		E74DE6B3CBCB0B9F39B2208C /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
+		E7A87DE224A40414255EC50B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F89628E6AE375983FAA6CADC /* GrowthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowthView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E20722A53B5376978BD1F179 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		18A7315C916E1374C359E6D9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7AA8E8943A436F510DEEE5E9 /* CacheTreeView.swift */,
+				E74DE6B3CBCB0B9F39B2208C /* Components.swift */,
+				E097BE5B346BDA5276D5C159 /* ConfirmOverlay.swift */,
+				B411988006D3C92FF0B14D87 /* ContentView.swift */,
+				C59F967C597CC131E95BCC35 /* FooterBar.swift */,
+				F89628E6AE375983FAA6CADC /* GrowthView.swift */,
+				C50D1EE96CA2878367322F8C /* HeaderView.swift */,
+				9893C81E478233BD353B4FEA /* InspectorView.swift */,
+				C8DF1F57F1FE687B1292C955 /* MenuBarView.swift */,
+				86533D951B7D4E58EC20B990 /* OnboardingView.swift */,
+				179A87C609D70895EDD74EDB /* PermissionPanel.swift */,
+				51AA83F433C4E9465A1CDF0D /* SettingsView.swift */,
+				3BB75619A974FC8FE3532437 /* SidebarView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		22CC396EA8A0D9E33D65D428 /* Yeet */ = {
+			isa = PBXGroup;
+			children = (
+				7198BECE2C865ACFD0DD6185 /* Core */,
+				18A7315C916E1374C359E6D9 /* Views */,
+				59141BA0523DD70049C251B3 /* YeetApp.swift */,
+			);
+			name = Yeet;
+			path = Sources/Yeet;
+			sourceTree = "<group>";
+		};
+		2A4ADA62E058B709439C6C95 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				93F1A53CBB5EC659EA91B091 /* Assets.xcassets */,
+				52128C03A48534FD7BED240F /* PrivacyInfo.xcprivacy */,
+				E7A87DE224A40414255EC50B /* Info.plist */,
+				B48D1827D04F9FB42A121898 /* Yeet.entitlements */,
+				4DE83D8B23DFD91E8F5A494F /* YeetAppStore.entitlements */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		7198BECE2C865ACFD0DD6185 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				07635EAA21F840E6FBE39914 /* AppModel.swift */,
+				080AA8C36F4E013921EFE183 /* Cleaner.swift */,
+				45AE5003E4FABE58BE3B3615 /* Format.swift */,
+				D7BDAECA5B02C30157384C71 /* Growth.swift */,
+				B1C2D3E4F5A60718293A4B5D /* L10n.swift */,
+				195694D304D2E0C65C02E10B /* Models.swift */,
+				203F1C4C21B2FE8CDE8C3052 /* ProtectedFolders.swift */,
+				D4807840217716A6BDDE73CC /* Scanner.swift */,
+				5FB6952CE3A9F2C1BF29A5BC /* ScannerExtra.swift */,
+				66F46B3E2DC5446470AAE557 /* Theme.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		72A12CB3A3FCAFF5BE99FDCA = {
+			isa = PBXGroup;
+			children = (
+				22CC396EA8A0D9E33D65D428 /* Yeet */,
+				2A4ADA62E058B709439C6C95 /* Support */,
+				B2B63887BA2A31EB2755D4D0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B2B63887BA2A31EB2755D4D0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3121C514600345061A678A63 /* Yeet.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3D231D93B347388C868C3F96 /* Yeet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 93BD02EA6F897E91187B17AE /* Build configuration list for PBXNativeTarget "Yeet" */;
+			buildPhases = (
+				67493491434C356CF87A32BE /* Sources */,
+				E20722A53B5376978BD1F179 /* Frameworks */,
+				D15CD842C06D5366E7A2C839 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Yeet;
+			productName = Yeet;
+			productReference = 3121C514600345061A678A63 /* Yeet.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E7708165E5D8909C658A9E89 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					3D231D93B347388C868C3F96 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = 4E0E08D1F7DF23690B77F914 /* Build configuration list for PBXProject "Yeet" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				vi,
+				en,
+				Base,
+			);
+			mainGroup = 72A12CB3A3FCAFF5BE99FDCA;
+			productRefGroup = B2B63887BA2A31EB2755D4D0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3D231D93B347388C868C3F96 /* Yeet */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D15CD842C06D5366E7A2C839 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AC5CC2AED7BC0F2BFE09192 /* Assets.xcassets in Resources */,
+				801ED7C8B5C839944E00BCA0 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		67493491434C356CF87A32BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F4CC8213FED580CAB4322CB /* YeetApp.swift in Sources */,
+				8481C219EC412ADA2E768B96 /* AppModel.swift in Sources */,
+				E618839A748B49A2AEECB7E2 /* Cleaner.swift in Sources */,
+				D44654178604251DDD6B803F /* Format.swift in Sources */,
+				5675579B8F61983BDBCC06F3 /* Growth.swift in Sources */,
+				A1B2C3D4E5F60718293A4B5C /* L10n.swift in Sources */,
+				D46B045305676954D89EA2A1 /* Models.swift in Sources */,
+				C8C8A476357B57EF92E0C770 /* ProtectedFolders.swift in Sources */,
+				316AEDB7F424AE5AF45D7DB9 /* Scanner.swift in Sources */,
+				643812D3024AC044FBE54242 /* ScannerExtra.swift in Sources */,
+				A34414FAB2B797F02468B893 /* Theme.swift in Sources */,
+				E179E24DF905399E2C960B90 /* CacheTreeView.swift in Sources */,
+				01B6FAABCBCB0FBAFCB8A7F6 /* Components.swift in Sources */,
+				2A96DB9DA9A3BDFE30C19994 /* ConfirmOverlay.swift in Sources */,
+				2703AE9E2925DEFF2FC67248 /* ContentView.swift in Sources */,
+				D06E56FF1DF32D1B56754D61 /* FooterBar.swift in Sources */,
+				DBE314262925884A332C2D01 /* GrowthView.swift in Sources */,
+				D3F8A86EBE73CE8C4D985CD7 /* HeaderView.swift in Sources */,
+				224BDA866D3C57EACE0E78D7 /* InspectorView.swift in Sources */,
+				F8F49B1E942CCDBE0696411C /* MenuBarView.swift in Sources */,
+				070DB0AA081B60361193866B /* OnboardingView.swift in Sources */,
+				008824C0F5959BF21977E444 /* PermissionPanel.swift in Sources */,
+				2EFF1E061077E64B65AA9C66 /* SettingsView.swift in Sources */,
+				09132E7FD652CB4A5725A3B2 /* SidebarView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		05245E9034370849B7F3D12B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1873E10F2B6C5BF4092D3BFD /* AppStore */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Support/YeetAppStore.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readwrite;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Support/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.stevetran.yeet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "APPSTORE $(inherited)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = AppStore;
+		};
+		2314491235B7CAE704A64605 /* AppStore */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = AppStore;
+		};
+		45FB30139C641D63692D42FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		8EF382C0D963BBA9E3E5ACCB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Support/Yeet.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Support/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.stevetran.yeet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		C425DDBF54D53C887D2CCA8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Support/Yeet.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Support/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.stevetran.yeet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4E0E08D1F7DF23690B77F914 /* Build configuration list for PBXProject "Yeet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05245E9034370849B7F3D12B /* Debug */,
+				45FB30139C641D63692D42FC /* Release */,
+				2314491235B7CAE704A64605 /* AppStore */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		93BD02EA6F897E91187B17AE /* Build configuration list for PBXNativeTarget "Yeet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8EF382C0D963BBA9E3E5ACCB /* Debug */,
+				C425DDBF54D53C887D2CCA8C /* Release */,
+				1873E10F2B6C5BF4092D3BFD /* AppStore */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E7708165E5D8909C658A9E89 /* Project object */;
+}

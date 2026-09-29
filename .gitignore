@@ -1,0 +1,11 @@
+.build/
+build/
+.swiftpm/
+*.xcodeproj/xcuserdata/
+DerivedData/
+.DS_Store
+scripts/appstore.env
+*.p8
+xcuserdata/
+Claude outputs/
+*.zip
