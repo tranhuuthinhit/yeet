@@ -171,10 +171,10 @@ enum Scanner {
                 let v = version(in: u.lastPathComponent)
                 let older = v.lexicographicallyPrecedes(newest)
                 let note = older
-                    ? L("Symbols for an older \(platform) version. Xcode re-downloads them if you connect a device running this version.",
-                        "Symbol của phiên bản \(platform) cũ. Xcode sẽ tải lại nếu bạn cắm thiết bị chạy phiên bản này.")
-                    : L("Newest \(platform) version on this Mac. Xcode will copy the symbols again on your next debug session (5–10 minutes).",
-                        "Phiên bản \(platform) mới nhất trên máy. Lần debug kế tiếp Xcode sẽ copy lại symbol (5–10 phút).")
+                    ? L("Symbols for an older \(platform) version. They're re-downloaded if you connect a device running this version.",
+                        "Symbol của phiên bản \(platform) cũ. Sẽ được tải lại nếu bạn cắm thiết bị chạy phiên bản này.")
+                    : L("Newest \(platform) version on this Mac. The symbols are copied again on your next debug session (5–10 minutes).",
+                        "Phiên bản \(platform) mới nhất trên máy. Lần debug kế tiếp sẽ copy lại symbol (5–10 phút).")
                 return leaf("xcode.ds.\(folder).\(u.lastPathComponent)", "\(platform) \(u.lastPathComponent)", u, t,
                             risk: older ? .safe : .rebuild, note: note, action: rm(u))
             }
@@ -199,9 +199,9 @@ enum Scanner {
 
         // Xcode's own cache & Playground simulators
         let xcCache = Paths.url("Library/Caches/com.apple.dt.Xcode")
-        result.append(leaf("xcode.cache", L("Xcode cache", "Cache Xcode"), xcCache, t, risk: .safe,
-                           note: L("Xcode's internal cache (temporary index, downloads). Recreated when you open Xcode.",
-                                   "Cache nội bộ của Xcode (index tạm, tải xuống). Tự tạo lại khi mở Xcode."), action: rm(xcCache)))
+        result.append(leaf("xcode.cache", L("Developer tools cache", "Cache công cụ dev"), xcCache, t, risk: .safe,
+                           note: L("Internal cache of the developer tools (temporary index, downloads). Recreated automatically.",
+                                   "Cache nội bộ của công cụ dev (index tạm, tải xuống). Tự tạo lại."), action: rm(xcCache)))
         let pg = Paths.url("Library/Developer/XCPGDevices")
         result.append(leaf("xcode.xcpg", "Playground devices", pg, t, risk: .safe,
                            note: L("Temporary simulators created by Swift Playgrounds. Recreated when you run a playground.",
@@ -218,14 +218,14 @@ enum Scanner {
         // Documentation cache
         let doc = xcodeDir.appendingPathComponent("DocumentationCache", isDirectory: true)
         result.append(leaf("xcode.doc", "Documentation Cache", doc, t, risk: .safe,
-                           note: L("Xcode re-downloads the docs when you open Developer Documentation.",
-                                   "Xcode sẽ tải lại tài liệu khi bạn mở Developer Documentation."), action: rm(doc)))
+                           note: L("The docs are re-downloaded when you open Developer Documentation.",
+                                   "Tài liệu sẽ được tải lại khi bạn mở Developer Documentation."), action: rm(doc)))
 
         // Device logs
         let logs = xcodeDir.appendingPathComponent("iOS Device Logs", isDirectory: true)
         result.append(leaf("xcode.log", "iOS Device Logs", logs, t, risk: .safe,
-                           note: L("Collected device logs. Xcode fetches them again when needed.",
-                                   "Log thiết bị đã thu thập. Xcode sẽ lấy lại khi cần."), action: rm(logs)))
+                           note: L("Collected device logs. They're fetched again when needed.",
+                                   "Log thiết bị đã thu thập. Sẽ được lấy lại khi cần."), action: rm(logs)))
         return result
     }
 

@@ -69,7 +69,7 @@ enum ToolKind: String, CaseIterable, Identifiable, Sendable, Hashable {
 
     var name: String {
         switch self {
-        case .xcode: return "Xcode"
+        case .xcode: return "App Builds"
         case .swiftDeps: return "CocoaPods & SPM"
         case .npm: return "npm"
         case .yarn: return "Yarn"
@@ -164,7 +164,7 @@ enum ToolKind: String, CaseIterable, Identifiable, Sendable, Hashable {
         let roots = gitRoots.isEmpty ? L("the project folders you chose in Settings", "thư mục dự án bạn chọn trong Cài đặt") : gitRoots.joined(separator: ", ")
         switch self {
         case .xcode:
-            return L("Xcode's DerivedData, Device Support, Simulator caches and old simulator runtimes — usually the biggest space hog on an iOS dev machine. Archives aren't listed because they can't be recreated.", "Xcode lưu DerivedData, Device Support, cache Simulator và các simulator runtime cũ — thường là nguồn chiếm dung lượng lớn nhất trên máy dev iOS. Archives không được liệt kê vì không tạo lại được.")
+            return L("DerivedData, Device Support, Simulator caches and old simulator runtimes — usually the biggest space hog on an iOS dev machine. Archives aren't listed because they can't be recreated.", "DerivedData, Device Support, cache Simulator và các simulator runtime cũ — thường là nguồn chiếm dung lượng lớn nhất trên máy dev iOS. Archives không được liệt kê vì không tạo lại được.")
         case .swiftDeps:
             return L("CocoaPods pod cache plus Swift Package Manager and Carthage package caches. They're re-downloaded on the next dependency install.", "Cache pod của CocoaPods, cache package của Swift Package Manager và Carthage. Lần cài dependency kế tiếp sẽ tải lại.")
         case .npm:

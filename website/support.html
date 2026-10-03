@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support — Yeet</title>
+<meta name="description" content="Yeet support: contact, frequently asked questions and troubleshooting for the developer cache cleaner for macOS.">
+<link rel="icon" href="images/app-icon.png">
+<style>
+body{margin:0;background:#F5F7FA;color:#1A2332;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#2E5C8A;text-decoration:none}
+a:hover{color:#1E4470;text-decoration:underline}
+header{position:sticky;top:0;z-index:10;background:rgba(245,247,250,0.96);border-bottom:1px solid #DDE3EB}
+.bar{max-width:1160px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;color:#1A2332}
+.brand img{width:32px;height:32px;border-radius:8px;display:block}
+.brand span{font-size:18px;font-weight:700;letter-spacing:-0.2px}
+.lang{margin-left:auto;font-size:13px;font-weight:600}
+main{max-width:760px;margin:0 auto;padding:56px 24px 72px;display:flex;flex-direction:column;gap:32px}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:1px;color:#2E5C8A}
+h1{margin:8px 0 0;font-size:clamp(30px,4.6vw,44px);line-height:1.1;letter-spacing:-0.8px}
+h2{margin:0 0 10px;font-size:21px;font-weight:600}
+h3{margin:0 0 6px;font-size:16px;font-weight:600}
+p,li{font-size:16px;line-height:1.6;color:#4A5568}
+p{margin:0}
+ul{margin:0;padding-left:20px}
+.card{background:#fff;border:1px solid #DDE3EB;border-radius:12px;padding:20px 24px;display:flex;flex-direction:column;gap:8px}
+.contact{background:rgba(46,92,138,0.08);border-color:transparent}
+.contact a{font-size:18px;font-weight:600}
+.faq{display:flex;flex-direction:column;gap:18px}
+hr{border:0;border-top:1px solid #DDE3EB;margin:24px 0 0}
+footer{border-top:1px solid #DDE3EB}
+footer .bar{font-size:14px;color:#6B7785;flex-wrap:wrap}
+footer .links{margin-left:auto;display:flex;gap:18px}
+footer a{color:#6B7785}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a class="brand" href="index.html"><img src="images/app-icon.png" alt=""><span>Yeet</span></a>
+    <a class="lang" href="#vi">Tiếng Việt</a>
+  </div>
+</header>
+
+<main id="en" lang="en">
+  <div>
+    <span class="eyebrow">SUPPORT</span>
+    <h1>How can we help?</h1>
+  </div>
+
+  <div class="card contact">
+    <h2>Contact</h2>
+    <p>Email us and we’ll get back to you within 2 business days. Please include your macOS version, the Yeet version (Yeet → About Yeet) and what you were trying to do.</p>
+    <a href="mailto:tranhuuthinhit@gmail.com?subject=Yeet%20support">tranhuuthinhit@gmail.com</a>
+  </div>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <div class="card">
+      <h3>Why does Yeet ask me to choose my Home folder?</h3>
+      <p>The Mac App Store version runs in the App Sandbox, so it can only read folders you grant. Choose your Home folder once on first launch; Yeet remembers the permission. You can revoke it at any time in Settings.</p>
+    </div>
+    <div class="card">
+      <h3>Is it safe to delete what Yeet lists?</h3>
+      <p>Yeet only lists caches that can be recreated. Each item is marked <strong>Safe</strong> (rebuilds itself) or <strong>Re-download</strong> (rebuilt on the next build or install, which takes longer). Things that can’t be recreated — app archives, device backups, chat history — are never listed. Nothing is deleted until you confirm.</p>
+    </div>
+    <div class="card">
+      <h3>Some tools or sizes are missing.</h3>
+      <ul>
+        <li>Make sure you granted access to your Home folder, not a subfolder.</li>
+        <li>For node_modules, Git and Rust targets, add your project folders in Settings.</li>
+        <li>Click Rescan after installing or using a new tool.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Yeet asks me to quit an app before cleaning.</h3>
+      <p>Clearing a cache while its app is running can make the app misbehave. Quit the app, then clean again.</p>
+    </div>
+    <div class="card">
+      <h3>Does Yeet collect any data?</h3>
+      <p>No. Yeet runs entirely on your Mac, has no account and no analytics, and makes no network requests. See the <a href="privacy.html">Privacy Policy</a>.</p>
+    </div>
+  </section>
+</main>
+
+<hr>
+
+<main id="vi" lang="vi">
+  <div>
+    <span class="eyebrow">HỖ TRỢ</span>
+    <h1>Bạn cần giúp gì?</h1>
+  </div>
+
+  <div class="card contact">
+    <h2>Liên hệ</h2>
+    <p>Gửi email cho chúng tôi, chúng tôi sẽ phản hồi trong vòng 2 ngày làm việc. Vui lòng ghi kèm phiên bản macOS, phiên bản Yeet (Yeet → About Yeet) và việc bạn đang làm.</p>
+    <a href="mailto:tranhuuthinhit@gmail.com?subject=Yeet%20support">tranhuuthinhit@gmail.com</a>
+  </div>
+
+  <section class="faq">
+    <h2>Câu hỏi thường gặp</h2>
+    <div class="card">
+      <h3>Vì sao Yeet yêu cầu chọn thư mục Home?</h3>
+      <p>Bản Mac App Store chạy trong App Sandbox nên chỉ đọc được thư mục bạn cấp quyền. Chọn thư mục Home một lần khi mở lần đầu; Yeet sẽ nhớ quyền này. Bạn có thể thu hồi bất cứ lúc nào trong Cài đặt.</p>
+    </div>
+    <div class="card">
+      <h3>Xoá những gì Yeet liệt kê có an toàn không?</h3>
+      <p>Yeet chỉ liệt kê cache tạo lại được. Mỗi mục được đánh dấu <strong>An toàn</strong> (tự tạo lại) hoặc <strong>Tải lại</strong> (tạo lại ở lần build/cài đặt kế tiếp, mất thời gian hơn). Những gì không tạo lại được — archive của app, bản sao lưu thiết bị, lịch sử trò chuyện — không bao giờ được liệt kê. Không có gì bị xoá trước khi bạn xác nhận.</p>
+    </div>
+    <div class="card">
+      <h3>Thiếu công cụ hoặc dung lượng không đúng.</h3>
+      <ul>
+        <li>Kiểm tra bạn đã cấp quyền cho thư mục Home, không phải thư mục con.</li>
+        <li>Với node_modules, Git và thư mục target của Rust, thêm thư mục dự án trong Cài đặt.</li>
+        <li>Bấm Quét lại sau khi cài hoặc dùng công cụ mới.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Yeet yêu cầu thoát ứng dụng trước khi dọn.</h3>
+      <p>Xoá cache khi ứng dụng đang chạy có thể làm ứng dụng lỗi. Hãy thoát ứng dụng rồi dọn lại.</p>
+    </div>
+    <div class="card">
+      <h3>Yeet có thu thập dữ liệu không?</h3>
+      <p>Không. Yeet chạy hoàn toàn trên máy Mac, không có tài khoản, không analytics và không gửi request mạng nào. Xem <a href="privacy.html">Chính sách quyền riêng tư</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="bar">
+    <span>© 2026 Yeet</span>
+    <span class="links">
+      <a href="index.html">Home</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="mailto:tranhuuthinhit@gmail.com">Contact</a>
+    </span>
+  </div>
+</footer>
+</body>
+</html>

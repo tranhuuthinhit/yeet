@@ -15,7 +15,7 @@ struct OnboardingView: View {
                     Text(L("Welcome to Yeet", "Chào mừng đến với Yeet"))
                         .font(.system(size: 18, weight: .bold))
                         .foregroundStyle(DS.text)
-                    Text(L("Scan and clean caches from Xcode, npm, Yarn, Gradle, Git and Claude Code.", "Quét và dọn cache của Xcode, npm, Yarn, Gradle, Git và Claude Code."))
+                    Text(L("Scan and clean caches from app builds, npm, Yarn, Gradle, Git and Claude Code.", "Quét và dọn cache của build ứng dụng, npm, Yarn, Gradle, Git và Claude Code."))
                         .font(.system(size: 13))
                         .foregroundStyle(DS.text2)
                 }

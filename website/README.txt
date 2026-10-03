@@ -4,6 +4,7 @@ Upload toàn bộ thư mục này lên web root của VPS (vd. /var/www/yeet/):
 
   index.html        trang chính
   privacy.html      Privacy Policy (URL này dán vào App Store Connect → App Privacy → Privacy Policy URL)
+  support.html      trang Support tĩnh, không cần JS (URL này dán vào App Store Connect → Support URL)
   support.js        runtime hiển thị (bắt buộc, đặt cạnh index.html)
   images/           ảnh chụp màn hình + icon
   downloads/        tạo thư mục này và đặt Yeet-1.0.0.dmg vào
