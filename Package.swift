@@ -12,6 +12,11 @@ let package = Package(
             name: "Yeet",
             path: "Sources/Yeet",
             swiftSettings: [.define("APPSTORE")]
+        ),
+        .testTarget(
+            name: "YeetTests",
+            dependencies: ["Yeet"],
+            path: "Tests/YeetTests"
         )
     ]
 )

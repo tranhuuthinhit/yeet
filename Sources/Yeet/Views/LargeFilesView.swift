@@ -280,7 +280,11 @@ private struct LargeFileTable: View {
             .padding(.vertical, 8)
             .overlay(alignment: .bottom) { Rectangle().fill(DS.divider).frame(height: 1) }
 
-            if rows.isEmpty {
+            if rows.isEmpty, let access = store.access, access.hasProblem {
+                AccessBanner(report: access) { store.scan() }
+                    .padding(16)
+                Spacer()
+            } else if rows.isEmpty {
                 ModuleEmptyState(symbol: "checkmark.circle",
                                  title: L("Nothing here", "Không có gì ở đây"),
                                  message: L("No files match the current filters.", "Không có file nào khớp bộ lọc hiện tại."))

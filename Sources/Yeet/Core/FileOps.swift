@@ -82,3 +82,35 @@ final class ScanProgress: @unchecked Sendable {
     func tick(_ n: Int = 1) { lock.lock(); _count += n; lock.unlock() }
     func cancel() { lock.lock(); _cancelled = true; lock.unlock() }
 }
+
+/// Checks what the sandbox actually lets Yeet read in the Home folder, so an empty scan can say
+/// "Yeet can't read these folders" instead of "nothing found".
+enum HomeAccess {
+    struct Report: Equatable {
+        /// The Home folder itself can be listed.
+        var homeReadable: Bool
+        /// Visible top-level folders (Desktop, Downloads, …) that exist but can't be listed.
+        var blocked: [String]
+        /// The folder the user granted, if any (tilde form).
+        var granted: String?
+        /// The grant is the Home folder (or a parent of it).
+        var coversHome: Bool
+
+        var hasProblem: Bool { !homeReadable || !blocked.isEmpty || !coversHome }
+    }
+
+    static func check() -> Report {
+        let fm = FileManager.default
+        let home = Paths.home
+        let top = try? fm.contentsOfDirectory(at: home, includingPropertiesForKeys: [.isDirectoryKey], options: [])
+        var blocked: [String] = []
+        for name in ["Desktop", "Documents", "Downloads", "Movies", "Music", "Pictures"] {
+            let u = home.appendingPathComponent(name, isDirectory: true)
+            var isDir: ObjCBool = false
+            guard fm.fileExists(atPath: u.path, isDirectory: &isDir), isDir.boolValue else { continue }
+            if (try? fm.contentsOfDirectory(atPath: u.path)) == nil { blocked.append(name) }
+        }
+        return Report(homeReadable: top != nil, blocked: blocked,
+                      granted: FolderAccess.grantedURL.map(Paths.tilde), coversHome: FolderAccess.coversHome)
+    }
+}

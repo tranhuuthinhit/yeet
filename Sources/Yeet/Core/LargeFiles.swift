@@ -236,6 +236,9 @@ final class LargeFilesStore {
     /// Minimum size the current results were scanned with.
     private(set) var scannedMinSize: Int64 = 100_000_000
 
+    /// What the sandbox let the last scan read (nil before the first scan).
+    var access: HomeAccess.Report? = nil
+
     @ObservationIgnored private var job: ScanProgress? = nil
 
     // MARK: Derived
@@ -350,6 +353,7 @@ final class LargeFilesStore {
             self.checked = self.checked.filter { ids.contains($0) }
             if let f = self.focused, !ids.contains(f) { self.focused = nil }
             self.partial = cancelled
+            self.access = HomeAccess.check()
             self.scanning = false
             self.scanned = true
             self.job = nil

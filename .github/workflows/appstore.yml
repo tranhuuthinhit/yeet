@@ -3,7 +3,7 @@
 #   • Always: regenerate Yeet.xcodeproj with XcodeGen and compile the AppStore configuration
 #     without signing. Compiler errors are printed at the end of the log. The unsigned Yeet.app
 #     and the regenerated Yeet.xcodeproj are uploaded as artifacts.
-#   • When the App Store Connect API key secrets exist: archive, sign with cloud-managed
+#   • On a manual run (Run workflow) when the App Store Connect API key secrets exist: archive, sign with cloud-managed
 #     certificates (-allowProvisioningUpdates) and export a .pkg ready for Transporter /
 #     App Store Connect (artifact "Yeet-AppStore-pkg"). Set UPLOAD_TO_ASC=true (repository
 #     variable) to upload it to App Store Connect directly.
@@ -47,6 +47,11 @@ jobs:
           xcodegen generate
           xcodebuild -version
 
+      - name: Scanner tests (swift test)
+        run: |
+          set -o pipefail
+          swift test 2>&1 | tail -60
+
       - name: Compile (AppStore configuration, unsigned)
         run: |
           mkdir -p build
@@ -76,7 +81,8 @@ jobs:
           if-no-files-found: ignore
 
       - name: Archive + export signed .pkg (App Store Connect)
-        if: env.HAS_ASC == 'true'
+        # Only on a manual run, so ordinary pushes don't upload a new build every time.
+        if: env.HAS_ASC == 'true' && github.event_name == 'workflow_dispatch'
         env:
           TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
@@ -93,7 +99,7 @@ jobs:
           ./scripts/release-appstore.sh $MODE
 
       - name: Upload signed .pkg
-        if: env.HAS_ASC == 'true'
+        if: env.HAS_ASC == 'true' && github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
           name: Yeet-AppStore-pkg

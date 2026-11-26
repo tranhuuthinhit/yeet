@@ -82,6 +82,13 @@ struct DuplicatesView: View {
                 }
                 Spacer()
             }
+        } else if store.groups.isEmpty, let access = store.access, access.hasProblem {
+            VStack {
+                AccessBanner(report: access) { store.scan() }
+                    .frame(maxWidth: 640)
+                Spacer()
+            }
+            .padding(24)
         } else if store.groups.isEmpty {
             ModuleEmptyState(symbol: "checkmark.circle",
                              title: L("No duplicates found", "Không tìm thấy file trùng"),

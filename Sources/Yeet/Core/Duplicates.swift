@@ -63,6 +63,8 @@ final class DuplicatesStore {
     var stage = 0
     /// Files seen (stage 0) or hashed (stage 1) by the running scan.
     var progress = 0
+    /// What the sandbox let the last scan read (nil before the first scan).
+    var access: HomeAccess.Report? = nil
     var minSize: Int64 = 1024 * 1024
     /// Which copy the "select extra copies" actions keep.
     var keep: KeepRule = .oldest {
@@ -195,6 +197,7 @@ final class DuplicatesStore {
             self.checked = []
             self.focusedGroup = found.first?.id
             self.partial = p.isCancelled
+            self.access = HomeAccess.check()
             self.scanning = false
             self.scanned = true
             self.stage = 0
