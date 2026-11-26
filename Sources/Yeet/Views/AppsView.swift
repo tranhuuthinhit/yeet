@@ -6,6 +6,9 @@ import SwiftUI
 struct AppsView: View {
     @Environment(AppModel.self) private var model
     @State private var appsGranted = ApplicationsAccess.isGranted
+    @State private var tab: AppsTab = .apps
+
+    private var intelAppCount: Int { store.apps.filter { $0.arch == .intel }.count }
 
     private var store: UninstallerStore { UninstallerStore.shared }
 
@@ -13,30 +16,63 @@ struct AppsView: View {
         VStack(spacing: 0) {
             ModuleHeader(Module.apps.title, subtitle: subtitle) {
                 HStack(spacing: 10) {
-                    searchField
+                    SegmentedPill(selection: $tab, options: [
+                        (value: AppsTab.apps, label: L("Apps", "Ứng dụng")),
+                        (value: AppsTab.extensions, label: L("Editor Extensions", "Extension của editor")),
+                    ])
+                    .fixedSize()
+                    if tab == .apps {
+                        Button {
+                            store.scan()
+                        } label: {
+                            Label(L("Rescan", "Quét lại"), systemImage: "arrow.clockwise")
+                        }
+                        .buttonStyle(OutlineButtonStyle())
+                        .disabled(store.scanning)
+                        .fixedSize()
+                    }
+                }
+            }
+
+            // Toolbar row: room for the search field and full-width sort labels.
+            HStack(spacing: 12) {
+                searchField
+                if tab == .apps {
+                    Spacer(minLength: 12)
+                    Text(L("Sort by", "Sắp xếp theo"))
+                        .font(.system(size: 12.5))
+                        .foregroundStyle(DS.text2)
                     SegmentedPill(selection: Binding(get: { store.sort }, set: { store.sort = $0 }),
                                   options: AppSort.allCases.map { (value: $0, label: $0.title) })
-                    Button {
-                        store.scan()
-                    } label: {
-                        Label(L("Rescan", "Quét lại"), systemImage: "arrow.clockwise")
-                    }
-                    .buttonStyle(OutlineButtonStyle())
-                    .disabled(store.scanning)
+                        .fixedSize()
+                } else {
+                    Spacer()
                 }
-            }
-
-            VStack(spacing: 12) {
-                if !appsGranted {
-                    grantBanner
-                }
-                content
             }
             .padding(.horizontal, 24)
-            .padding(.vertical, 16)
+            .padding(.top, 14)
+
+            VStack(spacing: 12) {
+                if tab == .apps {
+                    if !appsGranted {
+                        grantBanner
+                    }
+                    if store.scanned && intelAppCount > 0 {
+                        RosettaBanner(text: L("\(intelAppCount) apps are built only for Intel and run through Rosetta, which Apple is phasing out in a future macOS. Look for an Apple silicon update, or check the Editor Extensions tab for extensions with the same problem.",
+                                              "\(intelAppCount) ứng dụng chỉ build cho Intel và chạy nhờ Rosetta, mà Apple sẽ ngừng hỗ trợ ở một bản macOS tới. Hãy tìm bản cập nhật cho Apple silicon, và xem tab Extension của editor để kiểm tra extension gặp cùng vấn đề."))
+                    }
+                    content
+                } else {
+                    ExtensionsPanel(search: store.search)
+                }
+            }
+            .padding(.horizontal, 24)
+            .padding(.vertical, 14)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-            if store.scanned {
+            if tab == .extensions {
+                ExtensionsActionBar()
+            } else if store.scanned {
                 actionBar
             }
         }
@@ -63,7 +99,7 @@ struct AppsView: View {
             Image(systemName: "magnifyingglass")
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(DS.text3)
-            TextField(L("Search apps", "Tìm ứng dụng"),
+            TextField(tab == .apps ? L("Search apps", "Tìm ứng dụng") : L("Search extensions", "Tìm extension"),
                       text: Binding(get: { store.search }, set: { store.search = $0 }))
                 .textFieldStyle(.plain)
                 .font(.system(size: 13))
@@ -81,7 +117,7 @@ struct AppsView: View {
             }
         }
         .padding(.horizontal, 10)
-        .frame(width: 200, height: 30)
+        .frame(width: 260, height: 30)
         .background(RoundedRectangle(cornerRadius: 9, style: .continuous).fill(DS.inputBg))
     }
 
@@ -446,4 +482,9 @@ private struct LeftoverPanel: View {
             Button(L("Reveal in Finder", "Hiện trong Finder")) { FileOps.reveal(l.url) }
         }
     }
+}
+
+
+enum AppsTab: Hashable {
+    case apps, extensions
 }
