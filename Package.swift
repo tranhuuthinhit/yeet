@@ -10,7 +10,8 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "Yeet",
-            path: "Sources/Yeet"
+            path: "Sources/Yeet",
+            swiftSettings: [.define("APPSTORE")]
         )
     ]
 )

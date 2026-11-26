@@ -9,17 +9,17 @@ struct CheckboxView: View {
     var body: some View {
         Button(action: action) {
             ZStack {
-                RoundedRectangle(cornerRadius: 4, style: .continuous)
-                    .fill(isOn ? DS.primary : DS.surface)
-                RoundedRectangle(cornerRadius: 4, style: .continuous)
-                    .strokeBorder(isOn ? DS.primary : DS.border, lineWidth: 1.5)
+                RoundedRectangle(cornerRadius: 5, style: .continuous)
+                    .fill(isOn ? DS.primary : Color.white.opacity(0.06))
+                RoundedRectangle(cornerRadius: 5, style: .continuous)
+                    .strokeBorder(isOn ? DS.primary : Color.white.opacity(0.45), lineWidth: 1.5)
                 if state == .checked {
                     Image(systemName: "checkmark").font(.system(size: 10, weight: .bold))
                 } else if state == .partial {
                     Image(systemName: "minus").font(.system(size: 10, weight: .bold))
                 }
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(DS.onPrimary)
             .frame(width: 18, height: 18)
             .contentShape(Rectangle())
         }
@@ -55,7 +55,7 @@ struct ToolTile: View {
 
     var body: some View {
         RoundedRectangle(cornerRadius: radius, style: .continuous)
-            .fill(color)
+            .fill(LinearGradient(colors: [color.opacity(0.78), color], startPoint: .topLeading, endPoint: .bottomTrailing))
             .frame(width: size, height: size)
             .overlay(
                 Image(systemName: symbol)
@@ -98,8 +98,9 @@ struct ToastView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
-        .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(DS.text))
-        .shadow(color: DS.text.opacity(0.24), radius: 12, x: 0, y: 8)
+        .background(Capsule().fill(DS.sheet))
+        .overlay(Capsule().strokeBorder(DS.border, lineWidth: 1))
+        .shadow(color: .black.opacity(0.35), radius: 14, x: 0, y: 8)
         .frame(maxWidth: 640)
     }
 }

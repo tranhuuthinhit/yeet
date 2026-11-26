@@ -15,17 +15,17 @@ enum Risk: String, Sendable, Hashable {
 
     var color: Color {
         switch self {
-        case .safe: return Color(hex: 0x1E8A5E)
-        case .rebuild: return Color(hex: 0x8A5A00)
-        case .caution: return Color(hex: 0xE03131)
+        case .safe: return Color(hex: 0x9CF2CC)
+        case .rebuild: return Color(hex: 0xFFDC8F)
+        case .caution: return Color(hex: 0xFFB8B8)
         }
     }
 
     var tint: Color {
         switch self {
-        case .safe: return Color(hex: 0x2BA776, opacity: 0.15)
-        case .rebuild: return Color(hex: 0xF2B441, opacity: 0.18)
-        case .caution: return Color(hex: 0xE03131, opacity: 0.12)
+        case .safe: return Color(hex: 0x45D6A0, opacity: 0.22)
+        case .rebuild: return Color(hex: 0xF7C04F, opacity: 0.2)
+        case .caution: return Color(hex: 0xFF6363, opacity: 0.22)
         }
     }
 }

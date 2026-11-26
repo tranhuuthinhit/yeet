@@ -130,6 +130,9 @@ struct SettingsView: View {
             }
         }
         .formStyle(.grouped)
+        .scrollContentBackground(.hidden)
+        .background(HueBackground(hue: .violet))
+        .environment(\.hue, .violet)
         .id(language)
         // Outside the re-id'd Form so it isn't torn down with it.
         .onChange(of: language) { _, _ in

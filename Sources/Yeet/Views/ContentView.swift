@@ -9,77 +9,41 @@ struct ContentView: View {
     @AppStorage(AppLanguage.key) private var language = AppLanguage.en.rawValue
 
     var body: some View {
+        let hue = model.module.hue
+
         HStack(spacing: 0) {
             SidebarView()
                 .frame(width: 248)
-            Rectangle().fill(DS.border).frame(width: 1)
-            Group {
-                if model.selection == .growth {
-                    GrowthView()
-                } else {
-                    VStack(spacing: 0) {
-                        HeaderView()
-                        HStack(alignment: .top, spacing: 16) {
-                            CacheTreeView()
-                            InspectorView().frame(width: 300)
-                        }
-                        .padding(.horizontal, 24)
-                        .padding(.bottom, 16)
-                        .frame(maxHeight: .infinity)
-                        FooterBar()
-                    }
-                }
-            }
-            .frame(maxWidth: .infinity)
+            Rectangle().fill(Color.white.opacity(0.08)).frame(width: 1)
+            moduleView
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         // Rebuild the content on a language change. Kept off the outer view so the
         // `.onAppear` below (rescan / onboarding logic) doesn't run again.
         .id(language)
-        .background(DS.bg)
+        .background(HueBackground(hue: hue).animation(.easeInOut(duration: 0.35), value: model.module))
+        .environment(\.hue, hue)
         .overlay {
-            if model.showConfirm {
-                ConfirmOverlay().id(language).transition(.opacity)
+            if let request = model.review {
+                ReviewSheet(request: request) { model.review = nil }
+                    .id(language)
+                    .transition(.opacity)
             }
         }
         .overlay(alignment: .bottom) {
             if let toast = model.toast {
                 ToastView(text: toast)
-                    .padding(.bottom, 76)
+                    .padding(.bottom, 80)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
                     .allowsHitTesting(false)
             }
         }
-        .animation(.easeInOut(duration: 0.25), value: model.showConfirm)
+        .animation(.easeInOut(duration: 0.25), value: model.review?.id)
         .animation(.easeOut(duration: 0.15), value: model.toast)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                (Text("Yeet — ").fontWeight(.semibold)
-                    + Text(L("\(Fmt.size(model.grandTotal)) cleanable · \(Fmt.size(model.disk.free)) free on disk",
-                             "\(Fmt.size(model.grandTotal)) có thể dọn · \(Fmt.size(model.disk.free)) trống trên ổ đĩa"))
-                        .foregroundColor(DS.text2))
-                    .font(.system(size: 13))
-                    .foregroundColor(DS.text)
-                    .lineLimit(1)
-                    .monospacedDigit()
-            }
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    model.rescan()
-                } label: {
-                    HStack(spacing: 6) {
-                        SpinningIcon(systemName: "arrow.clockwise", active: model.phase == .scanning)
-                        Text(model.phase == .scanning ? L("Scanning…", "Đang quét…") : L("Rescan", "Quét lại"))
-                    }
-                }
-                .buttonStyle(OutlineButtonStyle(height: 28, fontSize: 13, horizontalPadding: 12))
-                .disabled(model.phase != .idle || model.showConfirm)
-                .help(L("Rescan all caches (⌘R)", "Quét lại toàn bộ cache (⌘R)"))
-            }
-        }
-        .toolbarBackground(Color.white, for: .windowToolbar)
-        .toolbarBackground(.visible, for: .windowToolbar)
+        .foregroundStyle(DS.text)
+        .tint(.white)
         .navigationTitle("Yeet")
-        .frame(minWidth: 1180, minHeight: 640)
+        .frame(minWidth: 1180, minHeight: 680)
         .sheet(isPresented: $showOnboarding) {
             OnboardingView {
                 didOnboard = true
@@ -95,7 +59,7 @@ struct ContentView: View {
             // dismisses the window again.
             let atLogin = AppDelegate.launchedAtLogin
             AppDelegate.launchedAtLogin = false
-            if didOnboard && (!BuildFlavor.isAppStore || FolderAccess.isGranted) {
+            if didOnboard && FolderAccess.isGranted {
                 if atLogin && BackgroundMode.isOn {
                     // Started at login: stay in the menu bar; the window opens from there.
                     growth.startSchedule()
@@ -107,6 +71,21 @@ struct ContentView: View {
             } else {
                 showOnboarding = true
             }
+        }
+    }
+
+    @ViewBuilder
+    private var moduleView: some View {
+        switch model.module {
+        case .overview: OverviewView()
+        case .devCaches, .systemJunk: CacheModuleView(module: model.module).id(model.module)
+        case .largeFiles: LargeFilesView()
+        case .duplicates: DuplicatesView()
+        case .browsers: BrowsersView()
+        case .apps: AppsView()
+        case .startup: StartupView()
+        case .growth: GrowthView()
+        case .health: HealthView()
         }
     }
 }

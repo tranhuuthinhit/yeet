@@ -135,7 +135,7 @@ struct PermissionPanel: View {
                 .lineSpacing(3)
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .foregroundStyle(Color(hex: 0x8A5A00))
+        .foregroundStyle(DS.warning)
         .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(DS.warning.opacity(0.15)))
@@ -186,7 +186,7 @@ struct FolderAccessPanel: View {
                         .font(.system(size: 12))
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                .foregroundStyle(Color(hex: 0x8A5A00))
+                .foregroundStyle(DS.warning)
                 .padding(10)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(DS.warning.opacity(0.15)))

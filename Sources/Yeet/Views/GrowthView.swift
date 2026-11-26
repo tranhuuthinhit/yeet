@@ -209,7 +209,7 @@ private struct NotMeasuredBanner: View {
                 .buttonStyle(OutlineButtonStyle(height: 28, fontSize: 12.5, horizontalPadding: 10))
             }
         }
-        .foregroundStyle(Color(hex: 0x8A5A00))
+        .foregroundStyle(DS.warning)
         .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(DS.warning.opacity(0.15)))

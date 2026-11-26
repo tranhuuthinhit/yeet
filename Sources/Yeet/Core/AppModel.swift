@@ -15,12 +15,18 @@ final class AppModel {
     var scanned: Set<ToolKind> = []
 
     // UI state
-    var selection: ViewSelection = .all
+    /// Screen shown in the main window.
+    var module: Module = .overview
+    /// Cache modules: show only this tool (chip row), or every tool of the module when nil.
+    var toolFilter: ToolKind? = nil
+    /// Cache modules: show only items of this risk level.
+    var riskFilter: Risk? = nil
+    /// "Review before cleaning" sheet currently shown, if any.
+    var review: ReviewRequest? = nil
     var expanded: Set<String> = ["xcode", "xcode.dd", "xcode.ds"]
     var checked: Set<String> = []
     var focused: String? = nil
     var phase: Phase = .idle
-    var showConfirm = false
     var toast: String? = nil
     var copied = false
     var disk = DiskInfo()
@@ -67,7 +73,7 @@ final class AppModel {
         if hidden {
             let ids = Set(toolNode(k).leaves.map(\.id))
             checked.subtract(ids)
-            if selection == .tool(k) { selection = .all }
+            if toolFilter == k { toolFilter = nil }
         } else if !scanned.contains(k) {
             scanTools([k])
         }
@@ -82,7 +88,7 @@ final class AppModel {
     func setAutoHideEmpty(_ on: Bool) {
         autoHideEmpty = on
         UserDefaults.standard.set(on, forKey: Self.autoHideKey)
-        if on, case .tool(let k) = selection, isEmptyOnThisMac(k) { selection = .all }
+        if on, let k = toolFilter, isEmptyOnThisMac(k) { toolFilter = nil }
     }
 
     /// Scans a few tools (e.g. one that was just un-hidden).
@@ -110,26 +116,38 @@ final class AppModel {
         CacheNode(id: "__all", name: L("All", "Tất cả"), url: Paths.home, tool: .xcode, children: toolNodes)
     }
 
+    /// Tools listed by a cache module (`.devCaches` / `.systemJunk`).
+    func tools(in module: Module) -> [ToolKind] {
+        guard let section = module.cacheSection else { return [] }
+        return visibleTools.filter { $0.section == section }
+    }
+
+    /// Pseudo-root of one cache module.
+    func moduleNode(_ module: Module) -> CacheNode {
+        CacheNode(id: "__\(module.rawValue)", name: module.title, url: Paths.home, tool: .xcode,
+                  children: enabledTools.filter { $0.section == module.cacheSection }.map(toolNode))
+    }
+
     /// Node that the header checkbox / header total refer to.
     var headNode: CacheNode {
-        switch selection {
-        case .all, .growth: return rootNode
-        case .tool(let k): return toolNode(k)
-        }
+        if let k = toolFilter { return toolNode(k) }
+        return module.cacheSection == nil ? rootNode : moduleNode(module)
     }
 
     var topNodes: [CacheNode] {
-        switch selection {
-        case .all: return visibleTools.map(toolNode)
-        case .growth: return []
-        case .tool(let k): return items[k] ?? []
-        }
+        if let k = toolFilter { return items[k] ?? [] }
+        return tools(in: module).map(toolNode)
     }
 
     func rows(hideEmpty: Bool) -> [TreeRow] {
         var out: [TreeRow] = []
+        let risk = riskFilter
         func walk(_ n: CacheNode, _ depth: Int) {
             if hideEmpty && n.size <= 0 { return }
+            if let risk {
+                if n.isGroup { if !n.leaves.contains(where: { $0.risk == risk }) { return } }
+                else if n.risk != risk { return }
+            }
             out.append(TreeRow(node: n, depth: depth))
             if let children = n.children, expanded.contains(n.id) {
                 for c in children { walk(c, depth + 1) }
@@ -178,15 +196,36 @@ final class AppModel {
         if expanded.contains(id) { expanded.remove(id) } else { expanded.insert(id) }
     }
 
+    /// Checks every Safe item (in the current cache module, or everywhere from Overview).
     func selectSafe() {
-        checked = Set(allLeaves.filter { $0.risk == .safe && $0.leafSize > 0 }.map(\.id))
+        let pool = module.cacheSection == nil ? allLeaves : moduleNode(module).leaves
+        let safe = Set(pool.filter { $0.risk == .safe && $0.leafSize > 0 }.map(\.id))
+        checked = module.cacheSection == nil ? safe : checked.union(safe)
+    }
+
+    /// Selected cache items that belong to `module` (all modules for Overview).
+    func selectedLeaves(in module: Module) -> [CacheNode] {
+        guard module.cacheSection != nil else { return selectedLeaves }
+        let ids = Set(moduleNode(module).leaves.map(\.id))
+        return selectedLeaves.filter { ids.contains($0.id) }
     }
 
     // MARK: - Navigation
 
+    func select(_ m: Module) {
+        module = m
+        toolFilter = nil
+        riskFilter = nil
+    }
+
+    /// Opens the cache module that holds a tool, filtered to that tool.
     func select(_ s: ViewSelection) {
-        selection = s
-        if case .tool(let k) = s {
+        switch s {
+        case .all: select(Module.devCaches)
+        case .growth: select(Module.growth)
+        case .tool(let k):
+            module = k.section == .dev ? .devCaches : .systemJunk
+            toolFilter = k
             focus(items[k]?.first?.id ?? k.rawValue)
         }
     }
@@ -282,16 +321,25 @@ final class AppModel {
 
     // MARK: - Clean
 
+    /// Shows the review sheet for the selected caches (of the current module), or cleans at once.
     @MainActor
     func requestClean(confirm: Bool) {
-        guard !selectedLeaves.isEmpty, phase == .idle else { return }
-        if confirm { showConfirm = true } else { startClean() }
+        let targets = selectedLeaves(in: module)
+        guard !targets.isEmpty, phase == .idle else { return }
+        guard confirm else { startClean(targets); return }
+        let running = AppRunning.runningNames(Set(targets.compactMap { $0.action?.requiresQuitBundleID }))
+        review = ReviewRequest(
+            items: targets.map { ReviewItem(id: $0.id, title: "\($0.tool.name) · \($0.name)", detail: $0.path,
+                                            size: $0.leafSize, method: .delete) },
+            warnings: running.isEmpty ? [] : [L("Running: \(running.joined(separator: ", ")). Quit these apps (⌘Q) first, or their caches will be skipped.",
+                                                "Đang chạy: \(running.joined(separator: ", ")). Thoát hẳn các app này (⌘Q) trước, nếu không cache của chúng sẽ bị bỏ qua.")],
+            perform: { [weak self] in self?.startClean(targets) })
     }
 
     @MainActor
-    func startClean() {
-        showConfirm = false
-        let targets = selectedLeaves
+    func startClean(_ targets: [CacheNode]? = nil) {
+        review = nil
+        let targets = targets ?? selectedLeaves
         guard !targets.isEmpty, phase == .idle else { return }
         let affected = Set(targets.map(\.tool))
         let before = affected.reduce(Int64(0)) { $0 + toolNode($1).size }
@@ -312,7 +360,7 @@ final class AppModel {
             let after = affected.reduce(Int64(0)) { $0 + toolNode($1).size }
             let freed = max(0, before - after)
             addFreed(freed)
-            checked.removeAll()
+            checked.subtract(targets.map(\.id))
             phase = .idle
             refreshDisk()
             if failures.isEmpty {

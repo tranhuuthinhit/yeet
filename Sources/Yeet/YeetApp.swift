@@ -9,8 +9,9 @@ struct YeetApp: App {
     @AppStorage(BackgroundMode.key) private var menuBarEnabled = true
 
     init() {
-        // Re-activate the sandboxed folder grant before any scan starts.
+        // Re-activate the sandboxed folder grants before any scan starts.
         FolderAccess.restore()
+        ApplicationsAccess.restore()
     }
 
     var body: some Scene {
@@ -18,11 +19,11 @@ struct YeetApp: App {
             ContentView()
                 .environment(model)
                 .environment(growth)
-                .preferredColorScheme(.light)
+                .preferredColorScheme(.dark)
         }
-        .defaultSize(width: 1280, height: 820)
+        .defaultSize(width: 1320, height: 840)
         .windowResizability(.contentMinSize)
-        .windowToolbarStyle(.unified(showsTitle: false))
+        .windowStyle(.hiddenTitleBar)
         .commands {
             CommandGroup(replacing: .newItem) {}
             CacheCommands(model: model, growth: growth)
@@ -32,15 +33,16 @@ struct YeetApp: App {
             SettingsView()
                 .environment(model)
                 .environment(growth)
-                .preferredColorScheme(.light)
+                .preferredColorScheme(.dark)
         }
 
         // Menu bar item: keeps Yeet (and the daily capture) running after the window is closed.
         MenuBarExtra(isInserted: $menuBarEnabled) {
             MenuBarView()
                 .environment(growth)
+                .preferredColorScheme(.dark)
         } label: {
-            Image(systemName: "internaldrive")
+            Image(systemName: "arrow.up.right.circle")
         }
         .menuBarExtraStyle(.window)
     }
@@ -60,12 +62,22 @@ struct CacheCommands: Commands {
     }
 
     var body: some Commands {
+        CommandMenu(t("Go", "Đi tới")) {
+            ForEach(Array(Module.allCases.enumerated()), id: \.element.id) { i, m in
+                if i < 9 {
+                    Button(m.title) { model.select(m) }
+                        .keyboardShortcut(KeyEquivalent(Character("\(i + 1)")), modifiers: .command)
+                } else {
+                    Button(m.title) { model.select(m) }
+                }
+            }
+        }
         CommandMenu("Cache") {
             Button(t("Rescan", "Quét lại")) { model.rescan() }
                 .keyboardShortcut("r", modifiers: .command)
                 .disabled(model.phase != .idle)
             Button(t("Analyze Disk Usage Now", "Phân tích dung lượng ngay")) {
-                model.select(.growth)
+                model.select(Module.growth)
                 growth.capture()
             }
             .keyboardShortcut("g", modifiers: [.command, .shift])
@@ -105,7 +117,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         let onboarded = UserDefaults.standard.bool(forKey: "didOnboard")
-        let ready = onboarded && (!BuildFlavor.isAppStore || FolderAccess.isGranted)
+        let ready = onboarded && FolderAccess.isGranted
         // Same condition ContentView uses to dismiss the window; otherwise onboarding would
         // show up without a Dock icon / menu.
         let hidden = Self.launchedAtLogin && BackgroundMode.isOn && ready

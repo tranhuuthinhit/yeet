@@ -53,6 +53,7 @@ struct OnboardingView: View {
         }
         .padding(24)
         .frame(width: 500)
-        .background(DS.surface)
+        .background(HueBackground(hue: .violet))
+        .environment(\.hue, .violet)
     }
 }

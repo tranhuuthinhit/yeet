@@ -54,8 +54,7 @@ struct InspectorView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 10)
-                    .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(DS.bg))
-                    .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous).strokeBorder(DS.divider, lineWidth: 1))
+                    .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(DS.inputBg))
 
                 HStack(spacing: 8) {
                     Button {
@@ -101,13 +100,13 @@ struct InspectorView: View {
                     Text(action.display)
                         .font(DS.mono(12))
                         .lineSpacing(4)
-                        .foregroundStyle(DS.divider)
+                        .foregroundStyle(DS.codeText)
                         .textSelection(.enabled)
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 10)
-                        .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(DS.text))
+                        .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(DS.codeBg))
                 }
             }
 

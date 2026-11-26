@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs>
+ <linearGradient id="bg" x1="0.1" y1="0" x2="0.9" y2="1">
+  <stop offset="0" stop-color="#2A1046"/><stop offset="0.55" stop-color="#6E2276"/><stop offset="1" stop-color="#C2366E"/>
+ </linearGradient>
+ <radialGradient id="glow" cx="0.82" cy="0.86" r="0.6">
+  <stop offset="0" stop-color="#FF8A3D" stop-opacity="0.85"/><stop offset="1" stop-color="#FF8A3D" stop-opacity="0"/>
+ </radialGradient>
+ <radialGradient id="glow2" cx="0.15" cy="0.1" r="0.55">
+  <stop offset="0" stop-color="#8B5CF6" stop-opacity="0.55"/><stop offset="1" stop-color="#8B5CF6" stop-opacity="0"/>
+ </radialGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.30"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0.06"/>
+ </linearGradient>
+ <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.7"/><stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.1"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0.35"/>
+ </linearGradient>
+ <linearGradient id="arrow" x1="0" y1="1" x2="1" y2="0">
+  <stop offset="0" stop-color="#FFE7F2"/><stop offset="1" stop-color="#FFFFFF"/>
+ </linearGradient>
+ <filter id="sh" filterUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024"><feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#2A0830" flood-opacity="0.45"/></filter>
+ <filter id="outer" filterUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity="0.28"/></filter>
+ <clipPath id="clip"><path d="M285 100 H739 C850 100 924 174 924 285 V739 C924 850 850 924 739 924 H285 C174 924 100 850 100 739 V285 C100 174 174 100 285 100 Z"/></clipPath>
+</defs>
+<g filter="url(#outer)"><path d="M285 100 H739 C850 100 924 174 924 285 V739 C924 850 850 924 739 924 H285 C174 924 100 850 100 739 V285 C100 174 174 100 285 100 Z" fill="url(#bg)"/></g>
+<g clip-path="url(#clip)">
+ <rect width="1024" height="1024" fill="url(#glow2)"/>
+ <rect width="1024" height="1024" fill="url(#glow)"/>
+ <ellipse cx="512" cy="170" rx="420" ry="150" fill="#FFFFFF" opacity="0.07"/>
+</g>
+<path d="M285 100 H739 C850 100 924 174 924 285 V739 C924 850 850 924 739 924 H285 C174 924 100 850 100 739 V285 C100 174 174 100 285 100 Z" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="3"/>
+<!-- glass tile -->
+<g filter="url(#sh)">
+ <rect x="262" y="262" width="500" height="500" rx="130" fill="url(#glass)"/>
+ <rect x="262" y="262" width="500" height="500" rx="130" fill="none" stroke="url(#rim)" stroke-width="4"/>
+</g>
+<!-- motion trails -->
+<g stroke="#FFFFFF" stroke-linecap="round">
+ <line x1="250" y1="690" x2="330" y2="610" stroke-width="26" opacity="0.35"/>
+ <line x1="300" y1="780" x2="380" y2="700" stroke-width="20" opacity="0.22"/>
+ <line x1="205" y1="620" x2="250" y2="575" stroke-width="16" opacity="0.18"/>
+</g>
+<!-- arrow -->
+<g filter="url(#sh)" fill="none" stroke="url(#arrow)" stroke-linecap="round" stroke-linejoin="round" stroke-width="84">
+ <path d="M385 639 L637 387"/>
+ <path d="M462 382 L642 382 L642 562"/>
+</g>
+<!-- flung particles -->
+<circle cx="742" cy="268" r="30" fill="#45D6A0"/>
+<circle cx="812" cy="356" r="20" fill="#FFA552"/>
+<circle cx="700" cy="196" r="15" fill="#62A2FF"/>
+<circle cx="830" cy="230" r="12" fill="#F7C04F"/>
+</svg>

@@ -39,7 +39,7 @@ if [[ -z "$IDENTITY" ]]; then
 fi
 if [[ -n "$IDENTITY" ]]; then
   echo "▸ codesign with \"$IDENTITY\""
-  codesign --force --deep --options runtime --entitlements Support/Yeet.entitlements --sign "$IDENTITY" "$APP"
+  codesign --force --deep --options runtime --entitlements Support/YeetAppStore.entitlements --sign "$IDENTITY" "$APP"
 else
   echo "▸ codesign ad-hoc (no certificate found)"
   codesign --force --deep --sign - "$APP"
