@@ -4,7 +4,9 @@
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES">
+      buildImplicitDependencies = "YES"
+      buildArchitectures = "Automatic"
+      runPostActionsOnFailure = "NO">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -14,7 +16,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3D231D93B347388C868C3F96"
+               BlueprintIdentifier = "194AE66506139EAD4B6B56AF"
                BuildableName = "Yeet.app"
                BlueprintName = "Yeet"
                ReferencedContainer = "container:Yeet.xcodeproj">
@@ -27,7 +29,18 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      shouldAutocreateTestPlan = "YES">
+      onlyGenerateCoverageForSpecifiedTargets = "NO">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "194AE66506139EAD4B6B56AF"
+            BuildableName = "Yeet.app"
+            BlueprintName = "Yeet"
+            ReferencedContainer = "container:Yeet.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+      <Testables>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -41,14 +54,16 @@
       allowLocationSimulation = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3D231D93B347388C868C3F96"
-               BuildableName = "Yeet.app"
-               BlueprintName = "Yeet"
-               ReferencedContainer = "container:Yeet.xcodeproj">
-            </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "194AE66506139EAD4B6B56AF"
+            BuildableName = "Yeet.app"
+            BlueprintName = "Yeet"
+            ReferencedContainer = "container:Yeet.xcodeproj">
+         </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -58,14 +73,16 @@
       debugDocumentVersioning = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3D231D93B347388C868C3F96"
-               BuildableName = "Yeet.app"
-               BlueprintName = "Yeet"
-               ReferencedContainer = "container:Yeet.xcodeproj">
-            </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "194AE66506139EAD4B6B56AF"
+            BuildableName = "Yeet.app"
+            BlueprintName = "Yeet"
+            ReferencedContainer = "container:Yeet.xcodeproj">
+         </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+      </CommandLineArguments>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
