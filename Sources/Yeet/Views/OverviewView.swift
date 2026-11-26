@@ -2,6 +2,7 @@ import SwiftUI
 
 /// Dashboard: disk breakdown, the biggest things worth cleaning across every module,
 /// a 7-day growth strip and a health summary.
+@MainActor
 struct OverviewView: View {
     @Environment(AppModel.self) private var model
     @Environment(GrowthStore.self) private var growth

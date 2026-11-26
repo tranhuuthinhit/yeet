@@ -663,7 +663,7 @@ enum BrowserScanner {
 
             // Inside a profile: "Default/…", or the data folder itself for Opera.
             let first = parts[0]
-            var rest: [String]
+            let rest: [String]
             if hiddenProfiles.contains(first) { return false }
             if isFile(data.appendingPathComponent(first).appendingPathComponent("Preferences")) {
                 rest = Array(parts.dropFirst())
