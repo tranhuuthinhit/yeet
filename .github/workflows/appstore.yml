@@ -1,0 +1,101 @@
+# Builds the sandboxed Mac App Store version of Yeet on every push to a releases/* branch.
+#
+#   • Always: regenerate Yeet.xcodeproj with XcodeGen and compile the AppStore configuration
+#     without signing. Compiler errors are printed at the end of the log. The unsigned Yeet.app
+#     and the regenerated Yeet.xcodeproj are uploaded as artifacts.
+#   • When the App Store Connect API key secrets exist: archive, sign with cloud-managed
+#     certificates (-allowProvisioningUpdates) and export a .pkg ready for Transporter /
+#     App Store Connect (artifact "Yeet-AppStore-pkg"). Set UPLOAD_TO_ASC=true (repository
+#     variable) to upload it to App Store Connect directly.
+#
+# Repository secrets (optional, for the signed .pkg):
+#   APPLE_TEAM_ID   – Team ID (developer.apple.com → Membership)
+#   ASC_KEY_ID      – App Store Connect API key ID (role: Admin, needed for cloud signing)
+#   ASC_ISSUER_ID   – Issuer ID
+#   ASC_KEY_P8      – contents of AuthKey_<id>.p8
+name: App Store build
+
+on:
+  push:
+    branches: ["releases/**"]
+    paths-ignore: ["AppStore/Screenshots/**", "AppStore/Design/**", "website/**", "**/*.md"]
+  workflow_dispatch:
+    inputs:
+      build_number:
+        description: "Build number (defaults to a timestamp)"
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: appstore-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      HAS_ASC: ${{ secrets.ASC_KEY_ID != '' && secrets.ASC_ISSUER_ID != '' && secrets.ASC_KEY_P8 != '' && secrets.APPLE_TEAM_ID != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate Xcode project
+        run: |
+          brew install xcodegen
+          xcodegen generate
+          xcodebuild -version
+
+      - name: Compile (AppStore configuration, unsigned)
+        run: |
+          mkdir -p build
+          if ! xcodebuild build \
+              -project Yeet.xcodeproj -scheme Yeet -configuration AppStore \
+              -destination 'generic/platform=macOS' -derivedDataPath build/dd \
+              CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO DEVELOPMENT_TEAM= \
+              > build/xcodebuild.log 2>&1; then
+            echo "::group::Compiler errors"
+            grep -E "error:" build/xcodebuild.log | sort -u | head -200
+            echo "::endgroup::"
+            tail -40 build/xcodebuild.log
+            exit 1
+          fi
+          grep -E "warning:" build/xcodebuild.log | grep -v "appintents" | sort -u | head -60 || true
+          echo "✓ Compiled"
+
+      - name: Upload unsigned app + generated project
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Yeet-unsigned
+          path: |
+            build/dd/Build/Products/AppStore/Yeet.app
+            Yeet.xcodeproj
+            build/xcodebuild.log
+          if-no-files-found: ignore
+
+      - name: Archive + export signed .pkg (App Store Connect)
+        if: env.HAS_ASC == 'true'
+        env:
+          TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          MARKETING_VERSION: "2.0.0"
+          BUILD_NUMBER: ${{ inputs.build_number }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/asc"
+          export ASC_KEY_PATH="$RUNNER_TEMP/asc/AuthKey_${ASC_KEY_ID}.p8"
+          printf '%s' "$ASC_KEY_P8" > "$ASC_KEY_PATH"
+          MODE=--export
+          [[ "${{ vars.UPLOAD_TO_ASC }}" == "true" ]] && MODE=""
+          ./scripts/release-appstore.sh $MODE
+
+      - name: Upload signed .pkg
+        if: env.HAS_ASC == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Yeet-AppStore-pkg
+          path: build/AppStore
+          if-no-files-found: warn

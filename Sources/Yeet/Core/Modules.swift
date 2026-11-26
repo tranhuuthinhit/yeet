@@ -43,7 +43,7 @@ enum Module: String, CaseIterable, Identifiable, Hashable {
         case .apps: return L("Uninstaller", "Gỡ ứng dụng")
         case .startup: return L("Startup Items", "Mục khởi động")
         case .growth: return L("Disk Growth", "Tăng trưởng ổ đĩa")
-        case .health: return L("Mac Health", "Sức khoẻ máy")
+        case .health: return L("System Health", "Sức khoẻ máy")
         }
     }
 
