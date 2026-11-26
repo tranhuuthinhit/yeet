@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// "Mac Health": battery, storage, thermal state and system information.
+/// "System Health": battery, storage, thermal state and system information.
 /// Logic ported from MacSweep (see Core/Health.swift). The parent paints the window background.
 struct HealthView: View {
     private var store: HealthStore { HealthStore.shared }
@@ -30,12 +30,17 @@ struct HealthView: View {
             } else {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
-                        BatteryCard(battery: store.battery)
-                        StorageCard(storage: store.storage)
+                        // Two columns; cards in a row share the taller card's height.
+                        HStack(alignment: .top, spacing: 16) {
+                            BatteryCard(battery: store.battery)
+                            StorageCard(storage: store.storage)
+                        }
+                        .fixedSize(horizontal: false, vertical: true)
                         HStack(alignment: .top, spacing: 16) {
                             ThermalCard(state: store.thermal)
                             SystemCard(system: store.system)
                         }
+                        .fixedSize(horizontal: false, vertical: true)
                         Text(L("Every value is read from macOS itself (the I/O Registry, power sources and sysctl). Nothing is estimated unless marked, and nothing leaves your Mac.",
                                "Mọi số liệu đều đọc từ chính macOS (I/O Registry, nguồn điện và sysctl). Không ước tính trừ khi có ghi chú, và không gửi dữ liệu ra khỏi máy."))
                             .font(.system(size: 11.5))
@@ -201,7 +206,7 @@ private struct BatteryCard: View {
             }
         }
         .padding(18)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .card()
     }
 
@@ -288,7 +293,7 @@ private struct StorageCard: View {
                  symbol: "lock.shield")
         }
         .padding(18)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .card()
     }
 
@@ -337,7 +342,7 @@ private struct ThermalCard: View {
                          "Trạng thái nhiệt của macOS: máy có đang bị giảm tốc để hạ nhiệt hay không. Tự cập nhật."))
         }
         .padding(18)
-        .frame(maxWidth: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .card()
     }
 }
@@ -357,7 +362,7 @@ private struct SystemCard: View {
             }
         }
         .padding(18)
-        .frame(maxWidth: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .card()
     }
 

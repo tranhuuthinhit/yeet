@@ -12,6 +12,7 @@ struct YeetApp: App {
         // Re-activate the sandboxed folder grants before any scan starts.
         FolderAccess.restore()
         ApplicationsAccess.restore()
+        BrowserAccess.restore()
     }
 
     var body: some Scene {

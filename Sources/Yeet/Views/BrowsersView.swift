@@ -154,6 +154,8 @@ private struct BrowserList: View {
                 ForEach(store.browsers) { b in
                     row(b)
                 }
+                SafariNote()
+                    .padding(.top, 8)
             }
             .padding(8)
         }
@@ -250,7 +252,25 @@ private struct BrowserDetail: View {
                                 section(g, items: items, total: b.size(of: g))
                             }
                         }
-                        if b.items.isEmpty {
+                        if !b.readable {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Label(L("macOS hasn’t let Yeet open \(b.name)’s data folder yet, so its caches can’t be measured.",
+                                        "macOS chưa cho Yeet mở thư mục dữ liệu của \(b.name), nên chưa đo được cache."),
+                                      systemImage: "lock.fill")
+                                    .font(.system(size: 12.5))
+                                    .foregroundStyle(DS.warning)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                Button {
+                                    if BrowserAccess.request(b.dataURL, name: b.name) { store.scan() }
+                                } label: {
+                                    Label(L("Allow Access to \(b.name) Data…", "Cho phép đọc dữ liệu \(b.name)…"),
+                                          systemImage: "folder.badge.plus")
+                                }
+                                .buttonStyle(FilledButtonStyle())
+                            }
+                            .padding(12)
+                            .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(DS.warning.opacity(0.12)))
+                        } else if b.items.isEmpty {
                             Text(L("Nothing to clean in this browser.", "Không có gì để dọn trong trình duyệt này."))
                                 .font(.system(size: 13))
                                 .foregroundStyle(DS.text2)
@@ -332,5 +352,29 @@ private struct BrowserDetail: View {
             }
         }
         .overlay(alignment: .bottom) { Rectangle().fill(DS.rowDivider).frame(height: 1) }
+    }
+}
+
+
+/// Safari keeps its data inside its own protected container, which no App Store app may open.
+private struct SafariNote: View {
+    var body: some View {
+        HStack(alignment: .top, spacing: 10) {
+            Image(systemName: "safari")
+                .font(.system(size: 22))
+                .foregroundStyle(DS.text2)
+                .frame(width: 30)
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Safari").font(.system(size: 13, weight: .semibold)).foregroundStyle(DS.text)
+                Text(L("macOS keeps Safari’s caches inside Safari’s own protected storage, which apps from the App Store can’t open. Clear them in Safari: Settings › Privacy › Manage Website Data, or Develop › Empty Caches.",
+                       "macOS giữ cache của Safari trong vùng lưu trữ riêng được bảo vệ, ứng dụng từ App Store không mở được. Hãy dọn ngay trong Safari: Cài đặt › Quyền riêng tư › Quản lý dữ liệu trang web, hoặc Nhà phát triển › Xoá bộ nhớ đệm."))
+                    .font(.system(size: 11.5))
+                    .foregroundStyle(DS.text3)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .padding(10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color.white.opacity(0.05)))
     }
 }

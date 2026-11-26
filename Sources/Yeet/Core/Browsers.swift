@@ -75,6 +75,8 @@ struct BrowserInfo: Identifiable, Sendable {
     /// Profile names as shown in the browser ("Nihal (Default)").
     let profiles: [String]
     let items: [BrowserItem]
+    /// False when the sandbox lets Yeet see the data folder but not list it.
+    var readable: Bool = true
 
     var total: Int64 { items.reduce(Int64(0)) { $0 + $1.size } }
 
@@ -475,7 +477,10 @@ enum BrowserScanner {
             let data = lib.appendingPathComponent(d, isDirectory: true)
             guard isDirectory(data) else { continue }
             let cache = lib.appendingPathComponent(c, isDirectory: true)
-            out.append(scanBrowser(name: name, bundleID: id, app: findApp(id, app), data: data, cache: cache))
+            let b = scanBrowser(name: name, bundleID: id, app: findApp(id, app), data: data, cache: cache)
+            // A data folder left behind by an uninstalled browser, with nothing in it: don't list it.
+            if b.appURL == nil && b.items.isEmpty && b.readable { continue }
+            out.append(b)
         }
         return out
     }
@@ -545,8 +550,9 @@ enum BrowserScanner {
             if a.group != b.group { return a.group.rawValue < b.group.rawValue }
             return a.size > b.size
         }
+        let readable = (try? FileManager.default.contentsOfDirectory(atPath: data.path)) != nil
         return BrowserInfo(name: name, bundleID: bundleID, appURL: app, dataURL: data, cacheURL: cache,
-                           profiles: labels, items: items)
+                           profiles: labels, items: items, readable: readable)
     }
 
     /// Everything one profile holds that Yeet can list.
@@ -691,5 +697,54 @@ enum BrowserScanner {
             return false
         }
         return check(data, inData: true) || check(cache, inData: false)
+    }
+}
+
+
+/// Extra folders the user granted from the Browsers screen (a browser's data folder that the
+/// Home grant alone doesn't open). Each is kept as an app-scoped security-scoped bookmark.
+enum BrowserAccess {
+    private static let key = "browserFolderBookmarks"
+    private static var active: [URL] = []
+
+    /// Call once at launch.
+    static func restore() {
+        let saved = UserDefaults.standard.dictionary(forKey: key) as? [String: Data] ?? [:]
+        var keep: [String: Data] = [:]
+        for (path, data) in saved {
+            var stale = false
+            guard let url = try? URL(resolvingBookmarkData: data, options: [.withSecurityScope],
+                                     relativeTo: nil, bookmarkDataIsStale: &stale),
+                  url.startAccessingSecurityScopedResource() else { continue }
+            active.append(url)
+            keep[path] = stale ? (bookmark(url) ?? data) : data
+        }
+        UserDefaults.standard.set(keep, forKey: key)
+    }
+
+    /// Asks the user to choose `folder` in an open panel. Returns true when access was granted.
+    @MainActor
+    static func request(_ folder: URL, name: String) -> Bool {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.allowsMultipleSelection = false
+        panel.canCreateDirectories = false
+        panel.showsHiddenFiles = true
+        panel.directoryURL = folder.deletingLastPathComponent()
+        panel.prompt = L("Allow", "Cho phép")
+        panel.message = L("Select the “\(folder.lastPathComponent)” folder so Yeet can read \(name)’s caches.",
+                          "Chọn thư mục “\(folder.lastPathComponent)” để Yeet đọc được cache của \(name).")
+        guard panel.runModal() == .OK, let url = panel.url else { return false }
+        _ = url.startAccessingSecurityScopedResource()
+        active.append(url)
+        var saved = UserDefaults.standard.dictionary(forKey: key) as? [String: Data] ?? [:]
+        if let data = bookmark(url) { saved[url.path] = data }
+        UserDefaults.standard.set(saved, forKey: key)
+        return true
+    }
+
+    private static func bookmark(_ url: URL) -> Data? {
+        try? url.bookmarkData(options: [.withSecurityScope], includingResourceValuesForKeys: nil, relativeTo: nil)
     }
 }
