@@ -374,7 +374,7 @@ final class AppModel {
         }
     }
 
-    private func addFreed(_ bytes: Int64) {
+    func addFreed(_ bytes: Int64) {
         freedTotal += bytes
         UserDefaults.standard.set(Int(freedTotal), forKey: Self.freedKey)
     }

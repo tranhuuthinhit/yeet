@@ -2,6 +2,7 @@ import QuickLook
 import SwiftUI
 
 /// "Large & Old Files": big files in Home the user may have forgotten, filtered by kind and age.
+@MainActor
 struct LargeFilesView: View {
     @Environment(AppModel.self) private var model
     @State private var quickLookURL: URL? = nil
@@ -143,6 +144,7 @@ struct LargeFilesView: View {
 
 // MARK: - Filter panel
 
+@MainActor
 private struct LargeFilterPanel: View {
     private var store: LargeFilesStore { LargeFilesStore.shared }
 
@@ -219,6 +221,7 @@ private struct LargeFilterPanel: View {
 
 // MARK: - File table
 
+@MainActor
 private struct LargeFileTable: View {
     @Binding var quickLookURL: URL?
     @FocusState private var tableFocused: Bool

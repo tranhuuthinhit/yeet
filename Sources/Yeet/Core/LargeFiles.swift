@@ -175,12 +175,12 @@ struct LargeFile: Identifiable, Hashable {
 }
 
 enum AgeFilter: String, CaseIterable, Identifiable {
-    case any, sixMonths, oneYear
+    case anyTime, sixMonths, oneYear
     var id: String { rawValue }
 
     var title: String {
         switch self {
-        case .any: return L("Any time", "Bất kỳ")
+        case .anyTime: return L("Any time", "Bất kỳ")
         case .sixMonths: return L("Over 6 months", "Hơn 6 tháng")
         case .oneYear: return L("Over a year", "Hơn 1 năm")
         }
@@ -189,7 +189,7 @@ enum AgeFilter: String, CaseIterable, Identifiable {
     /// Minimum age in seconds.
     var seconds: TimeInterval {
         switch self {
-        case .any: return 0
+        case .anyTime: return 0
         case .sixMonths: return 182 * 86_400
         case .oneYear: return 365 * 86_400
         }
@@ -223,7 +223,7 @@ final class LargeFilesStore {
     /// Smallest file shown. Lowering it below `scannedMinSize` triggers a new scan.
     var minSize: Int64 = 100_000_000
     var kindFilter: Set<FileKind> = Set(FileKind.allCases)
-    var ageFilter: AgeFilter = .any
+    var ageFilter: AgeFilter = .anyTime
     var sort: LargeSort = .size
     /// Paths of the ticked files.
     var checked: Set<String> = []
